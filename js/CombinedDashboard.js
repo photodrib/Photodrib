@@ -9,13 +9,165 @@
     * The main ViewModel that initiaites and orchestrates the Dashboard experience.    
 */
 
-/*
-    Tile model class. Holds the runtime data for a tile that is bound to the UI
-    to deliver the tile experience.
 
-    Takes in a param which holds the data for the tile and the UI config. UI 
-    config comes from the Dashboard.js, passed to it by the Default.aspx.
-    Param comes from the Tiles.js which returns the tile parameters. 
+/*
+    The root Model class that holds all the sections and tiles inside the sections.
+
+    Params:
+        title - Title for the Dashboard eg "Start"
+        sections - An array of section models.
+        user - Currently logged in user details, or anonymous.
+        ui - UI configuration, defaults.        
+*/
+var DashboardModel = function (title, sections, user, ui) {
+    var self = this;
+
+    this.appRunning = false;
+    this.currentApp = "";
+    this.user = ko.observable(user);
+    this.title = ko.observable(title);
+    this.sections = ko.observableArray(sections);
+
+    // Get a section model.
+    this.getSection = function (uniqueId) {
+        return ko.utils.arrayFirst(self.sections(), function (section) {
+            return section.uniqueId == uniqueId;
+        });
+    }
+
+    // Get a tile no matter where it is
+    this.getTile = function (id) {
+        var foundTile = null;
+        ko.utils.arrayFirst(self.sections(), function (section) {
+            foundTile = ko.utils.arrayFirst(section.tiles(), function (item) {
+                return item.uniqueId == id;
+            });
+            return foundTile != null;
+        });
+        return foundTile;
+    }
+
+    // Remove a tile no matter where it is.
+    this.removeTile = function (id) {
+        ko.utils.arrayForEach(self.sections(), function (section) {
+            var tile = ko.utils.arrayFirst(section.tiles(), function (tile) {
+                return tile.uniqueId == id;
+            });
+            if (tile) {
+                section.tiles.remove(tile);
+                return;
+            }
+        });
+    }
+
+    // Subscribe to changes in each section's tile collection
+    this.subscribeToChange = function (callback) {
+        self.sections.subscribe(function (sections) {
+            ko.utils.arrayForEach(sections(), function (section) {
+                section.tiles.subscribe(function (tiles) {
+                    callback(section, tiles);
+                });
+            });
+        });
+        ko.utils.arrayForEach(self.sections(), function (section) {
+            section.tiles.subscribe(function (tiles) {
+                callback(section, tiles);
+            });
+        });
+    }
+
+    // Load sections and tiles from a serialized form. 
+    this.loadSectionsFromString = function (tileSerialized, tileBuilder) {
+        // Format: Section1~weather1,weather.youtube1,youtube|Section2~ie1,ie.
+
+        var sections = ("" + tileSerialized).split("|");
+        var sectionArray = [];
+
+        _.each(sections, function (section) {
+            var sectionName = _.string.strLeft(section, '~');
+
+            var tiles = _.string.strRight(section, '~').split(".");
+
+            var sectionTiles = [];
+
+            var index = 0;
+            _.each(tiles, function (tile) {
+                if (tile.length > 0) {
+                    var tileId = _.string.strLeft(tile, ",");
+                    var tileName = _.string.strRight(tile, ",");
+
+                    if (tileName.length > 0) {
+                        var builder = tileBuilder[tileName];
+                        if (builder == null) {
+                            //console.log("No builder found for tile: " + tileName);
+                        }
+                        else {
+                            var tileParams = builder(tileId);
+                            var newTile = new Tile(tileParams, ui);
+                            newTile.index = index++;
+                            sectionTiles.push(newTile);
+                        }
+                    }
+                }
+            });
+
+            var newSection = new Section({
+                name: sectionName,
+                tiles: sectionTiles
+            }, self);
+            sectionArray.push(newSection);
+
+        });
+
+
+        self.sections(sectionArray);
+    }
+
+    // Load sections and tiles from an object model.
+    this.loadSections = function (sections, tileBuilder) {
+        var sectionArray = [];
+
+        _.each(sections, function (section) {
+            var sectionTiles = [];
+
+            var index = 0;
+            _.each(section.tiles, function (tile) {
+                var builder = window.TileBuilders[tile.name];
+                var tileParams = builder(tile.id, tile.name, tile.data);
+                var newTile = new Tile(tileParams, ui);
+                newTile.index = index++;
+                sectionTiles.push(newTile);
+            });
+
+            var newSection = new Section({
+                name: section.title,
+                tiles: sectionTiles
+            }, self);
+            sectionArray.push(newSection);
+
+        });
+
+
+        self.sections(sectionArray);
+    }
+
+    // Serialize sections and tiles in a string, handy to store in cookie.
+    this.toSectionString = function () {
+        // Format: Section1~weather1,weather.youtube1,youtube|Section2~ie1,ie.
+
+        return ko.utils.arrayMap(self.sections(), function (section) {
+            return section.name() + "~" +
+                ko.utils.arrayMap(section.getTilesSorted(), function (tile) {
+                    return tile.uniqueId + "," + tile.name;
+                }).join(".");
+        }).join("|");
+    }
+
+    
+};
+
+/*
+    Represents a single Tile object model.
 */
 var Tile = function (param, ui) {
     var self = this;
@@ -135,7 +287,11 @@ var Tile = function (param, ui) {
                 }
             })
         }
-    }    
+    }
+
+    this.click = function () {
+        
+    }
 };
 
 /*
@@ -150,9 +306,7 @@ var Section = function (section) {
 
     this.tiles = ko.observableArray(section.tiles);
     
-    // Returns tiles sorted by index so that they are shown on the 
-    // dashboard in right order.
-
+    // Returns tiles sorted by index
     this.getTilesSorted = function () {
         return self.tiles().sort(function (left, right) {
             return left.index == right.index ? 0 :
@@ -160,14 +314,17 @@ var Section = function (section) {
         });
     }
 
+    // Computed function to data-bind
     this.sortedTiles = ko.computed(this.getTilesSorted, this);
 
+    // Get a tile inside the section
     this.getTile = function(uniqueId) {
         return ko.utils.arrayFirst(self.tiles(), function(tile) {
             return tile.uniqueId == uniqueId;
         });
     }
 
+    // Add a new tile at the end of the section
     this.addTile = function (tile) {
         self.tiles.push(tile);
         _.defer(function () {
@@ -183,147 +340,9 @@ var Section = function (section) {
 
 };
 
-var DashboardModel = function (title, sections, user, ui, tileBuilder) {
-    var self = this;
-
-    this.appRunning = false;
-    this.currentApp = "";
-    this.user = ko.observable(user);
-    this.title = ko.observable(title);
-    this.sections = ko.observableArray(sections);
-
-    this.timerId = 0;
-
-    this.removeTile = function (id) {
-        ko.utils.arrayForEach(self.sections(), function (section) {
-            var tile = ko.utils.arrayFirst(section.tiles(), function (tile) {
-                return tile.uniqueId == id;
-            });
-            if (tile) {
-                section.tiles.remove(tile);
-                return;
-            }
-        });        
-    }
-
-    this.getTile = function (id) {
-        var foundTile = null;
-        ko.utils.arrayFirst(self.sections(), function (section) {
-            foundTile = ko.utils.arrayFirst(section.tiles(), function (item) {
-                return item.uniqueId == id;
-            });
-            return foundTile != null;
-        });
-        return foundTile;
-    }
-
-    this.subscribeToChange = function (callback) {
-        self.sections.subscribe(function (sections) {
-            ko.utils.arrayForEach(sections(), function (section) {
-                section.tiles.subscribe(function (tiles) {
-                    callback(section, tiles);
-                });
-            });
-        });
-        ko.utils.arrayForEach(self.sections(), function (section) {
-            section.tiles.subscribe(function (tiles) {
-                callback(section, tiles);
-            });
-        });
-    }
-
-    this.loadSectionsFromString = function (tileSerialized) {
-        // Format: Section1~weather1,weather.youtube1,youtube|Section2~ie1,ie.
-
-        var sections = ("" + tileSerialized).split("|");
-        var sectionArray = [];
-
-        _.each(sections, function (section) {
-            var sectionName = _.string.strLeft(section, '~');
-
-            var tiles = _.string.strRight(section, '~').split(".");
-
-            var sectionTiles = [];
-
-            var index = 0;
-            _.each(tiles, function (tile) {
-                if (tile.length > 0) {
-                    var tileId = _.string.strLeft(tile, ",");
-                    var tileName = _.string.strRight(tile, ",");
-
-                    if (tileName.length > 0) {
-                        var builder = tileBuilder[tileName];
-                        if (builder == null) {
-                            //console.log("No builder found for tile: " + tileName);
-                        }
-                        else {
-                            var tileParams = builder(tileId);
-                            var newTile = new Tile(tileParams, ui);
-                            newTile.index = index++;
-                            sectionTiles.push(newTile);
-                        }
-                    }
-                }
-            });
-
-            var newSection = new Section({
-                name: sectionName,
-                tiles: sectionTiles
-            }, self);
-            sectionArray.push(newSection);
-
-        });
 
 
-        self.sections(sectionArray);        
-    }
-
-    this.loadSections = function (sections) {
-        var sectionArray = [];
-
-        _.each(sections, function (section) {
-            var sectionTiles = [];
-
-            var index = 0;
-            _.each(section.tiles, function (tile) {
-                var builder = window.TileBuilders[tile.name];
-                var tileParams = builder(tile.id, tile.name, tile.data);
-                var newTile = new Tile(tileParams, ui);
-                newTile.index = index++;
-                sectionTiles.push(newTile);                                    
-            });
-
-            var newSection = new Section({
-                name: section.title,
-                tiles: sectionTiles
-            }, self);
-            sectionArray.push(newSection);
-
-        });
-
-
-        self.sections(sectionArray);
-    }
-
-    this.toSectionString = function () {
-        // Format: Section1~weather1,weather.youtube1,youtube|Section2~ie1,ie.
-
-        return ko.utils.arrayMap(self.sections(), function (section) {
-            return section.name() + "~" +
-                ko.utils.arrayMap(section.getTilesSorted(), function (tile) {
-                    return tile.uniqueId + "," + tile.name;
-                }).join(".");
-        }).join("|");
-    }
-
-    
-    this.getSection = function (uniqueId) {
-        return ko.utils.arrayFirst(self.sections(), function (section) {
-            return section.uniqueId == uniqueId;
-        });
-    }
-
-};﻿// Copyright 2012 Omar AL Zabir
+﻿// Copyright 2012 Omar AL Zabir
 // Part of Droptiles project.
 // This file holds the definition of tiles and which tiles appear by default 
 // to new visitors. 
@@ -335,24 +354,28 @@ window.DefaultTiles = [
         name :"Section1",
         tiles: [
            { id: "flickr1", name:"flickr" },
-           { id: "amazon1", name:"amazon" },
+           //{ id: "amazon1", name:"amazon" },
            { id: "news1", name: "news" },
+           { id: "reader1", name: "reader" },        
            { id: "weather1", name: "weather" },
+           { id: "cuttherope1", name: "cutTheRope" },
            //{ id: "calendar1", name: "calendar" },
-           { id: "video1", name: "video" },
+           { id: "myblog1", name: "myblog" },		   
            { id: "feature1", name: "feature" },
+           { id: "angrybirds1", name: "angrybirds" }
            //{ id: "facebook1", name: "facebook" }
-           { id: "reader1", name: "reader" }
+           
         ]
     },
     {
         name: "Section2",
         tiles: [
+           { id: "video1", name: "video" },
            { id: "wikipedia1", name: "wikipedia" },           
-           { id: "email1", name: "email" },
-           { id: "maps1", name: "maps" },
-           { id: "angrybirds1", name: "angrybirds" },
-           { id: "cuttherope1", name: "cutTheRope" },
+           //{ id: "email1", name: "email" },
+           //{ id: "maps1", name: "maps" },
+           { id: "facebook1", name: "facebook" },
+           { id: "ie1", name: "ie" },
            { id: "dynamicTile1", name: "dynamicTile" },
            { id: "buy1", name: "buy" }]
     },
@@ -361,8 +384,7 @@ window.DefaultTiles = [
             
            //{ id: "youtube1", name: "youtube" },
            //{ id: "ie1", name: "ie" }
-           { id: "howto1", name: "howto" },
-           { id: "myblog1", name: "myblog" }
+           { id: "howto1", name: "howto" }           
         ]
     }
 ];
@@ -441,7 +463,7 @@ window.TileBuilders = {
             size: "tile-double",
             color: "bg-color-darken",
             iconSrc: "img/Youtube.png",
-            slides: ['<iframe width="310" height="174" src="http://www.youtube.com/embed/IO45ZiGql8E" frameborder="0" allowfullscreen=""></iframe>']
+            slides: ['<iframe width="310" height="174" src="http://youtube.com/embed/g4iD-9GSW-0" frameborder="0" allowfullscreen=""></iframe>']
         };
     },
 
@@ -573,7 +595,7 @@ window.TileBuilders = {
             uniqueId: uniqueId,
             name: "news",
             label: "My Blog",
-            color: "bg-color-green",
+            color: "bg-color-blueDark",
             size: "tile-double",
             appUrl: "http://omaralzabir.com/",
             scriptSrc: ["tiles/news/news.js?v=1"],
@@ -638,7 +660,7 @@ window.TileBuilders = {
             name: "buy",
             color: "bg-color-blueDark",
             size: 'tile-double tile-double-vertical',
-            slidesFrom: ["tiles/buy/buy.html"],
+            slidesFrom: ["tiles/buy/buy.html?v=1"],
             cssSrc: ["tiles/buy/buy.css"]
         };       
     },
@@ -749,21 +771,26 @@ var ui = {
                 c_sub.animate({ "height": 0, "opacity": 0 }, 200);
             }
         });
-
+        
+        //el.find("a.metro-tile-link").click(function (event) {
+        //    $(this).parent().click();
+        //});
         // On click, launch the app either inside dashboard or in a new browser tab
-        el.click(function (event) {
+        el.find("a.metro-tile-link").click(function (event) {
+        //el.click(function(event) {
             // Drag & drop just happened. Prevent incorrect click event.
-            if ($(this).data("noclick") == true)
+            if ($(this).parent().data("noclick") == true)
                 return;
 
-            
             // If the item clicked on the tile is a link or inside a link, don't
             // lauch app. Let browser do the hyperlink click behavior.
-            if ($(event.target).parents("a").length > 0)
+            if (event.target.tagName == "A" ||
+                !$(event.target).closest("a").hasClass("metro-tile-link"))
                 return;
 
-            // Open app in new browser window. Not all websites like IFRAMEing.
             if (!_.isEmpty(tile.appUrl)) {
+
+                // Open app in new browser window. Not all websites like IFRAMEing.
                 if (tile.appInNewWindow) {
                     var open_link = window.open('', '_blank');
                     open_link.location = tile.appUrl;
@@ -807,10 +834,10 @@ var ui = {
                                     'top': ($(window).height() - 512) / 2
                                 })
                         );
-                    
+
                 }
             }
-        });
+        });        
     },
 
     /*
@@ -961,10 +988,41 @@ var ui = {
         through the slides.
     */
     animateTiles: function () {
+        //ui.animateTilesOneAfterAnother();
+        ui.animateTilesAllAtOnce();
+    },
+
+    animateTilesOneAfterAnother: function () {
         window.clearInterval(ui.timerId);
+        window.lastTileIndex = 0;
         ui.timerId = window.setInterval(function () {
-            $(ui.tile_selector).each(function () {
-                var el = $(this);
+            var tilesWithSlides = $(ui.tile_selector).has(ui.tile_content_main_selector);
+            if (window.lastTileIndex == tilesWithSlides.length)
+                window.lastTileIndex = 0;
+
+            if (tilesWithSlides.length > window.lastTileIndex) {
+                var el = $(tilesWithSlides[window.lastTileIndex]);
+                window.lastTileIndex++;
+                var slides = $(ui.tile_content_main_selector, el);
+                if (slides.length > 0) {
+                    var slideIndex = el.data("slideIndex") || 1;
+                    if (slideIndex == slides.length) {
+                        slideIndex = 0;
+                    }
+                    var firstPage = slides.first();
+                    firstPage.animate({ marginTop: -(slideIndex * firstPage.height()) }, 500);
+                    el.data("slideIndex", ++slideIndex);
+                }
+            }
+        }, ui.tile_content_slide_delay);
+    },
+
+    animateTilesAllAtOnce: function () {
+        window.clearInterval(ui.timerId);
+        window.lastTileIndex = 0;
+        ui.timerId = window.setInterval(function () {
+            $(ui.tile_selector).each(function (index, tile) {
+                var el = $(tile);
                 var slides = $(ui.tile_content_main_selector, el);
                 if (slides.length > 0) {
                     var slideIndex = el.data("slideIndex") || 1;
@@ -985,7 +1043,7 @@ var ui = {
     makeSortable: function () {
         $(ui.trash).droppable({
             tolerance: 'touch',
-            hoverClass: 'highlight',
+            hoverClass: 'trashcash_highlight',
             over: function (event, o) {
                 //$(this).animate({ "zoom": "1.5" });
             },
@@ -1008,12 +1066,16 @@ var ui = {
             revert: true,
             distance: 10,
             tolerance: "pointer",
+            delay: 500,
             "opacity": 0.6,
             start: function (event, o) {
+                window.dragging = true;
                 o.item.data("noclick", true);
                 $(ui.trash).fadeIn();
+                //$('#body').kinetic("stop");
             },
             stop: function (event, o) {
+                window.dragging = false;
                 o.item.data("noclick", false);                
                 $(ui.trash).fadeOut();
 
@@ -1210,7 +1272,7 @@ var ui = {
 // This is the viewModel for the entire Dashboard. The starting point.
 // It takes the currentUser (defined in the Droptiles.master), the UI config (as above)
 // and the TileBuilders that comes from Tiles.js.
-var viewModel = new DashboardModel("Start", [], window.currentUser, ui, TileBuilders);
+var viewModel = new DashboardModel("Start", [], window.currentUser, ui);
 
 $(document).ready(function () {
 
@@ -1227,15 +1289,15 @@ $(document).ready(function () {
     var cookie = readCookie("p");
     if (cookie != null && cookie.length > 0) {
         try {
-            viewModel.loadSectionsFromString(cookie);
+            viewModel.loadSectionsFromString(cookie, window.TileBuilders);
         } catch (e) {
             // Failed to load saved tiles. Load the default tiles.
-            viewModel.loadSectionsFromString(DefaultTiles);
+            viewModel.loadSectionsFromString(DefaultTiles, window.TileBuilders);
         }
     }
     else {
         // No cookie, load default tiles. Defined in Tiles.js
-        viewModel.loadSectionsFromString(DefaultTiles);
+        viewModel.loadSectionsFromString(DefaultTiles, window.TileBuilders);
     }
 
     ui.showMetroSections(function () {
@@ -1265,7 +1327,9 @@ $(document).ready(function () {
                 
                     newTile.index = sectionTiles.length;
                 
-                    lastSection.addTile(newTile);                    
+                    lastSection.addTile(newTile);
+                    ui.attach(newTile);
+
                 }
             });
 
@@ -1321,7 +1385,18 @@ $(document).ready(function () {
     });
 
     // Supports only IE 9+, Chrome, Firefox, Safari
-    if ($.browser.msie && parseInt($.browser.version) < 9)
+    if ($.browser.msie && parseInt($.browser.version) < 8)
         $("#browser_incompatible").show();
 
+    // Implement drag & scroll the window behavior
+    if ($.browser.msie == null) {
+        $('#body').kinetic({
+            moved: function (settings) {
+                if (!window.dragging) {
+                    $(window).scrollLeft($(window).scrollLeft() + settings.scrollLeft);
+                    $(window).scrollTop($(window).scrollTop() + settings.scrollTop);
+                }
+            }
+        });
+    }    
 });
