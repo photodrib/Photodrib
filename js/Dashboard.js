@@ -388,7 +388,7 @@ var ui = {
             revert: true,
             distance: 10,
             tolerance: "pointer",
-            delay: 500,
+            //delay: 500,
             "opacity": 0.6,
             start: function (event, o) {
                 window.dragging = true;
