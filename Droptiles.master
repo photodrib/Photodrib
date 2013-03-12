@@ -2,40 +2,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Photodrib" />
-    <meta name="author" content="Han Zuohao, Wang Yuxi, Wu Pangbo, Zhang Sheng" />
-    <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    
-    <title>Photodrib</title>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Photodrib" />
+	<meta name="author" content="Han Zuohao, Wang Yuxi, Wu Pangbo, Zhang Sheng" />
+	<meta name="apple-mobile-web-app-capable" content="yes" /> 
+	
+	<title>Photodrib</title>
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/droptiles.css?v=14">
-    
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    
-    <asp:ContentPlaceHolder ID="head" runat="server">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/droptiles.css?v=14">
+	
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<asp:ContentPlaceHolder ID="head" runat="server">
 
-    </asp:ContentPlaceHolder>    
-    
+	</asp:ContentPlaceHolder>    
+	
 </head>
 <body>
-    <asp:ContentPlaceHolder ID="body" runat="server">
+	<asp:ContentPlaceHolder ID="body" runat="server">
 
-    </asp:ContentPlaceHolder>
+	</asp:ContentPlaceHolder>
 </body>
 
 <% if (Request.IsLocal) { %>    
-    <!-- 
-    If you change any of the below javascript files, make sure you run the Combine.bat
-    file in the /js folder to generate the CombinedDashboard.js file again. And then don't
-    forget to update the ?v=14#. Otherwise user's will have cached copies in their browser
-    and won't get the newly deployed file. -->
+	<!-- 
+	If you change any of the below javascript files, make sure you run the Combine.bat
+	file in the /js folder to generate the CombinedDashboard.js file again. And then don't
+	forget to update the ?v=14#. Otherwise user's will have cached copies in their browser
+	and won't get the newly deployed file. -->
 
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.21.custom.min.js"></script>
@@ -56,48 +56,33 @@
 <% } %>    
 
 <script type="text/javascript">
-    // Bootstrap initialization
-    $(document).ready(function () {
-        $('.dropdown-toggle').dropdown();        
-    });
+	// Bootstrap initialization
+	$(document).ready(function () {
+		$('.dropdown-toggle').dropdown();        
+	});
 </script>
-        
+		
 <% if (Profile.IsAnonymous) { %>
 <script type="text/javascript">
-    window.currentUser = new User({
-        firstName: "None",
-        lastName: "Anonymous",
-        photo: "img/User No-Frame.png",
-        isAnonymous: true
-    });
+	window.currentUser = new User({
+		firstName: "None",
+		lastName: "Anonymous",
+		photo: "img/User No-Frame.png",
+		isAnonymous: true
+	});
 </script>
 <% } else { %>
 <script type="text/javascript">
-    window.currentUser = new User({
-        firstName: "<%= Profile.Firstname %>",
-        lastName: "<%= Profile.Lastname %>",
-        photo: "img/User No-Frame.png",
-        isAnonymous: false
-    });
+	window.currentUser = new User({
+		firstName: "<%= Profile.Firstname %>",
+		lastName: "<%= Profile.Lastname %>",
+		photo: "img/User No-Frame.png",
+		isAnonymous: false
+	});
 </script>
 <% } %>
 
-    <asp:ContentPlaceHolder ID="scripts" runat="server">
-    </asp:ContentPlaceHolder>
+	<asp:ContentPlaceHolder ID="scripts" runat="server">
+	</asp:ContentPlaceHolder>
 	
-	<script type="text/ecmascript">
-        
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-33406100-1']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
-    </script>
-
-    
 </html>

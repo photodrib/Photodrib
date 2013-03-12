@@ -18,7 +18,7 @@
             <p>No, I am an existing user. I want to login:</p>
             <form class="metro-form" runat="server" id="LoginForm">
                 <div class="metro-form-control" style="width: 300px">
-                    <label>Email</label>
+                    <label>Username</label>
                     <div class="metro-text-box">
                         <input name="username" type="text" autofocus value="<%= Request["username"] ?? "" %>" />
                         <span class="helper"></span>
