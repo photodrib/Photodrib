@@ -35,12 +35,11 @@
                     <a class="pull-left" style="margin-top: 7px; margin-right: 5px;" href="">
                         <img src="img/avatar474_2.gif" style="max-height: 16px;" />
                     </a>
-                    <h1><a class="brand" href="?">Droptiles</a></h1>
+                    <h1><a class="brand" href="?">Photodrib</a></h1>
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li><a class="active" href="?"><i class="icon-th-large"></i>Dashboard</a></li>
                             <li><a href="AppStore.aspx"><i class="icon-shopping-cart"></i>Apps</a></li>
-                            <li><a href="http://oazabir.github.com/Droptiles/"><i class="icon-gift"></i>I want this!</a></li>
                             <li>
                                 <form id="googleForm" class="navbar-search pull-left" action="http://www.google.com/search" target="_blank">
                                     <input id="googleSearchText" type="text" class="search-query span2" name="q" placeholder="Google">
@@ -80,7 +79,7 @@
             <div id="browser_incompatible" class="alert">
                 <button class="close" data-dismiss="alert">×</button>
                 <strong>Warning!</strong>
-                Your browser is incompatible with Droptiles. Please use Internet Explorer 9+, Chrome, Firefox or Safari.
+                Your browser is incompatible with Photodrib. Please use Internet Explorer 9+, Chrome, Firefox or Safari.
             </div>
             <div id="CombinedScriptAlert" class="alert">
                 <button class="close" data-dismiss="alert">×</button>
@@ -131,10 +130,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="copyright">            
-            Copyright 2012 <a href="http://omaralzabir.com/">Omar AL Zabir</a>. This is Open Source. 
-            For license details and to get the code, <a href="http://oazabir.github.com/Droptiles/">See Droptiles GitHub</a>
         </div>
     </div>
 

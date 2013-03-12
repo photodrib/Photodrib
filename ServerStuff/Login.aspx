@@ -20,7 +20,7 @@
                 <div class="metro-form-control" style="width: 300px">
                     <label>Email</label>
                     <div class="metro-text-box">
-                        <input name="username" type="text" autofocus value="<%= Request["username"] ?? "yourname@domain.com" %>" />
+                        <input name="username" type="text" autofocus value="<%= Request["username"] ?? "" %>" />
                         <span class="helper"></span>
                     </div>
                 </div>

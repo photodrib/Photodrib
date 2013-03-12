@@ -8,25 +8,9 @@
         <div class="container metro">
             <form class="metro-form" runat="server" id="LoginForm">
                 <div class="metro-form-control" style="width: 300px">
-                    <label>Email</label>
+                    <label>Username</label>
                     <div class="metro-text-box">
-                        <input name="username" type="text" autofocus value="<%= Request["username"] ?? "yourname@domain.com" %>" />
-                        <span class="helper"></span>
-                    </div>
-                </div>
-
-                <div class="metro-form-control" style="width: 300px">
-                    <label>First name</label>
-                    <div class="metro-text-box">
-                        <input name="firstname" type="text" value="<%= Request["firstname"] ?? "" %>" />
-                        <span class="helper"></span>
-                    </div>
-                </div>
-
-                <div class="metro-form-control" style="width: 300px">
-                    <label>Last name</label>
-                    <div class="metro-text-box">
-                        <input name="lastname" type="text" value="<%= Request["lastname"] ?? "" %>" />
+                        <input name="username" type="text" autofocus value="<%= Request["username"] ?? "" %>" />
                         <span class="helper"></span>
                     </div>
                 </div>
@@ -45,6 +29,33 @@
                         <input name="confirm_password" type="password" value="" />
                         <span class="helper"></span>
                     </div>
+                </div>
+                
+                <div class="metro-form-control" style="width: 300px">
+                    <label>First name</label>
+                    <div class="metro-text-box">
+                        <input name="firstname" type="text" value="<%= Request["firstname"] ?? "" %>" />
+                        <span class="helper"></span>
+                    </div>
+                </div>
+
+                <div class="metro-form-control" style="width: 300px">
+                    <label>Last name</label>
+                    <div class="metro-text-box">
+                        <input name="lastname" type="text" value="<%= Request["lastname"] ?? "" %>" />
+                        <span class="helper"></span>
+                    </div>
+                </div>
+
+                <div class="metro-form-control" style="width: 300px">
+                    <label>Gender</label>
+                    <div class="metro-select">
+                        <select name="gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <span class="helper"></span>
                 </div>
 
                 <label class="metro-check">

@@ -770,7 +770,7 @@ var ui = {
                 var c_sub = $(ui.tile_content_sub_selector, el);
                 c_sub.animate({ "height": 0, "opacity": 0 }, 200);
             }
-        });
+        })
         
         //el.find("a.metro-tile-link").click(function (event) {
         //    $(this).parent().click();
@@ -780,13 +780,13 @@ var ui = {
         //el.click(function(event) {
             // Drag & drop just happened. Prevent incorrect click event.
             if ($(this).parent().data("noclick") == true)
-                return;
+                return;
 
             // If the item clicked on the tile is a link or inside a link, don't
-            // lauch app. Let browser do the hyperlink click behavior.
+            // lauch app. Let browser do the hyperlink click behavior
             if (event.target.tagName == "A" ||
                 !$(event.target).closest("a").hasClass("metro-tile-link"))
-                return;
+                return;
 
             if (!_.isEmpty(tile.appUrl)) {
 
@@ -833,10 +833,10 @@ var ui = {
                                     'left': ($(window).width() - 512) / 2,
                                     'top': ($(window).height() - 512) / 2
                                 })
-                        );
+                        )
 
                 }
-            }
+            
         });        
     },
 
@@ -996,7 +996,7 @@ var ui = {
         window.clearInterval(ui.timerId);
         window.lastTileIndex = 0;
         ui.timerId = window.setInterval(function () {
-            var tilesWithSlides = $(ui.tile_selector).has(ui.tile_content_main_selector);
+            var tilesWithSlides = $(ui.tile_selector).has(ui.tile_content_main_selector)
             if (window.lastTileIndex == tilesWithSlides.length)
                 window.lastTileIndex = 0;
 
@@ -1066,7 +1066,7 @@ var ui = {
             revert: true,
             distance: 10,
             tolerance: "pointer",
-            //delay: 500,
+            delay: 500,
             "opacity": 0.6,
             start: function (event, o) {
                 window.dragging = true;
@@ -1326,7 +1326,7 @@ $(document).ready(function () {
                     var newTile = new Tile(newTileDef, ui, viewModel);
                 
                     newTile.index = sectionTiles.length;
-                
+               
                     lastSection.addTile(newTile);
                     ui.attach(newTile);
 

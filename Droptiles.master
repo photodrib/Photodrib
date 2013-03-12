@@ -3,13 +3,11 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Droptiles - Metro style Live Tile enabled Web 2.0 Dashboard" />
-    <meta name="author" content="Omar AL Zabir" />
-    <meta name="copyright" content="2012, Omar AL Zabir" />
-    <meta name="license" content="Free for personal use. For commercial use, contact me for License. http://oazabir.github.com/Droptiles/" />
+    <meta name="description" content="Photodrib" />
+    <meta name="author" content="Han Zuohao, Wang Yuxi, Wu Pangbo, Zhang Sheng" />
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     
-    <title>Droptiles - Web 2.0 Dashboard in metro style</title>
+    <title>Photodrib</title>
 
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 

@@ -17,11 +17,10 @@
                     <a class="pull-left" style="margin-top: 7px; margin-right: 5px;" href="Default.aspx">
                         <img src="img/avatar474_2.gif" style="max-height: 16px;" />
                     </a>
-                    <h1><a class="brand" href="Default.aspx">Droptiles</a></h1>
+                    <h1><a class="brand" href="Default.aspx">Photodrib</a></h1>
                     <div class="nav-collapse">
                         <ul class="nav">
-                            <li><a class="active" href="Default.aspx"><i class="icon-th-large"></i>Dashboard</a></li>
-                            <li><a href="http://oazabir.github.com/Droptiles/"><i class="icon-gift"></i>I want this!</a></li>                            
+                            <li><a class="active" href="Default.aspx"><i class="icon-th-large"></i>Dashboard</a></li>                        
                         </ul>                        
                     </div>
                 </div>
@@ -79,10 +78,6 @@
 
                 </div>
             </div>
-        </div>
-        <div id="copyright">
-            Copyright 2012 Omar AL Zabir. 
-            For license or to get the code, <a href="http://oazabir.github.com/Droptiles/">Click here</a>
         </div>
     </div>
 </asp:Content>

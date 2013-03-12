@@ -311,7 +311,7 @@ var ui = {
     */
     animateTiles: function () {
         //ui.animateTilesOneAfterAnother();
-        ui.animateTilesAllAtOnce();
+        ui.animateTilesOneAfterAnother();
     },
 
     animateTilesOneAfterAnother: function () {
