@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="RssReader.aspx.cs" Inherits="RssReader" MasterPageFile="~/Droptiles.master" %>
+<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="RssReader.aspx.cs" Inherits="RssReader" MasterPageFile="~/Photodrib.master" %>
 <%@ OutputCache NoStore="true" Location="None"  %>
 <asp:Content ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" type="text/css" href="css/rssreader.css?v=14" />

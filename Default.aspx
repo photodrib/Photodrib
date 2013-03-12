@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="Default.aspx.cs" Inherits="_Default" MasterPageFile="~/Droptiles.master" %>
+<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="Default.aspx.cs" Inherits="_Default" MasterPageFile="~/Photodrib.master" %>
 <%@ OutputCache NoStore="true" Location="None"  %>
 
 <asp:Content ContentPlaceHolderID="scripts" runat="server">

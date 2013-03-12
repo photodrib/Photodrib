@@ -6,23 +6,23 @@
 .weather h2 {
 	color: white;
 	text-shadow: #808080 1px 1px 0;
-    text-align: right;
+	text-align: right;
 }
  
 .weather p {
 	font-size: 12pt;
 	margin: 5px 0 0;
-    float: right;
-    clear: right;
-    width: 140px;
-    text-align: right;
+	float: right;
+	clear: right;
+	width: 140px;
+	text-align: right;
 }
 
 .weather img {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    width: 250px;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	width: 250px;
 }
  
 .weather p span {
@@ -30,7 +30,7 @@
 }
 
 p.weather_tomorrow {
-    font-size: 10pt;
+	font-size: 10pt;
 }
  
 .weather a:link, .weather a:active, .weather a:visited {

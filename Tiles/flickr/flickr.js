@@ -36,4 +36,3 @@ function flickr_load(tile, div) {
     });
     
 }
-

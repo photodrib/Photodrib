@@ -4,17 +4,17 @@
 <style>
 #DynamicTable table {  border-collapse: collapse; }
 #DynamicTable td, th { 
-    text-align: center; 
-    border: 1px solid #ddd; 
-    padding:2px 5px; 
+	text-align: center; 
+	border: 1px solid #ddd; 
+	padding:2px 5px; 
  }
-    #DynamicTable {
-        margin-bottom: 20px;
-    }   
-    
-    
-    
-    #DynamicTable caption {margin: 0 0 .5em; font-weight: bold; font-size: 14pt; }
+	#DynamicTable {
+		margin-bottom: 20px;
+	}   
+	
+	
+	
+	#DynamicTable caption {margin: 0 0 .5em; font-weight: bold; font-size: 14pt; }
 </style>
 
 <div style="margin: 40px">
@@ -55,10 +55,10 @@
 </table>
 <center>This data came from an ASPX page.</center>
 
-    <form>
-        <label>Search</label>
-        <input name="search" class="metro-text-box" type="text"  />
-        <br />
-        <input class="metro-button" type="button" value="Search" onclick="alert('You can do all sorts of things inside a tile.')" />
-    </form>
+	<form>
+		<label>Search</label>
+		<input name="search" class="metro-text-box" type="text"  />
+		<br />
+		<input class="metro-button" type="button" value="Search" onclick="alert('You can do all sorts of things inside a tile.')" />
+	</form>
 </div>

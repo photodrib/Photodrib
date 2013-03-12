@@ -25,10 +25,10 @@ else
 
 
 function generateDiagram (
-    [string]$diagramText,
-    [string]$fileName
-    )
-    {
+	[string]$diagramText,
+	[string]$fileName
+	)
+	{
 		try {
 			$input = new-object System.Collections.Specialized.NameValueCollection;
 			$input.Add("uml", $diagramText);
@@ -47,8 +47,8 @@ function generateDiagram (
 			Add-content c:\stuff\monitor\umllog.txt $exception
 		
 		}
-    }
-    
+	}
+	
 del class.png
 del usecase.png    
 generateDiagram "A->B: Hello" "class.png"

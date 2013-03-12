@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AppStore.aspx.cs" Inherits="Tiles_AppStore" MasterPageFile="Droptiles.master" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AppStore.aspx.cs" Inherits="Tiles_AppStore" MasterPageFile="~/Photodrib.master" %>
 <asp:Content runat="server" ContentPlaceHolderID="head">
     <link rel="stylesheet" type="text/css" href="css/AppStore.css?v=14" /> 
 </asp:Content>

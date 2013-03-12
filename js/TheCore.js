@@ -339,6 +339,3 @@ var Section = function (section) {
     }
 
 };
-
-
-

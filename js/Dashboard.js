@@ -592,7 +592,7 @@ var ui = {
 
 
 // This is the viewModel for the entire Dashboard. The starting point.
-// It takes the currentUser (defined in the Droptiles.master), the UI config (as above)
+// It takes the currentUser (defined in the Photodrib.master), the UI config (as above)
 // and the TileBuilders that comes from Tiles.js.
 var viewModel = new DashboardModel("Start", [], window.currentUser, ui);
 
