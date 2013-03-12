@@ -46,6 +46,7 @@ public partial class Signup : System.Web.UI.Page
         {
             MessagePanel.Visible = true;
             Message.Text = x.Message;
+            throw x;
         }
     }
 }

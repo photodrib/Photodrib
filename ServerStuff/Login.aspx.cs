@@ -6,6 +6,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Buddy;
+using System.Threading.Tasks;
 
 public partial class Login : System.Web.UI.Page
 {
@@ -20,7 +21,11 @@ public partial class Login : System.Web.UI.Page
         var username = Request["username"];
         var password = Request["password"];
         var rememberMe = Convert.ToBoolean(Request["remember"] == "on");
-        AuthenticatedUser user = client.Login(username, password).Result;
+        Task<AuthenticatedUser> task = client.Login(username, password);
+        if (task.IsCompleted)
+        {
+            AuthenticatedUser user = task.Result;
+        }
         if (Membership.ValidateUser(username, password))
         {
             Response.Cookies.Add(FormsAuthentication.GetAuthCookie(username, rememberMe));
