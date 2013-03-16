@@ -1,18 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "oazabir-Droptiles-4de8423", ".", "{0256E984-6B4D-4FF9-B084-4B3660F5E309}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Photodrib", ".", "{0256E984-6B4D-4FF9-B084-4B3660F5E309}"
 	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/Droptiles"
-		Debug.AspNetCompiler.PhysicalPath = "..\oazabir-Droptiles-4de8423\"
+		Debug.AspNetCompiler.PhysicalPath = "..\Photodrib\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Droptiles\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/Droptiles"
-		Release.AspNetCompiler.PhysicalPath = "..\oazabir-Droptiles-4de8423\"
+		Release.AspNetCompiler.PhysicalPath = "..\Photodrib\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Droptiles\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Profile;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 public partial class Settings : System.Web.UI.Page
 {
@@ -41,8 +35,8 @@ public partial class Settings : System.Web.UI.Page
                 }
             }
 
-            Profile.Firstname = firstName;
-            Profile.Lastname = lastname;
+            Profile.FirstName = firstName;
+            Profile.LastName = lastname;
             Profile.Save();
             Response.Redirect("Breakout.aspx");
         }

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 public partial class _Default : System.Web.UI.Page 
 {
@@ -13,7 +9,7 @@ public partial class _Default : System.Web.UI.Page
         if (!Profile.IsAnonymous)
             Response.Cookies.Add(new HttpCookie("p", Profile.Tiles)
             {
-                Expires = DateTime.Now.AddDays(30)                
+                Expires = DateTime.Now.AddDays(30)
             });
     }
 

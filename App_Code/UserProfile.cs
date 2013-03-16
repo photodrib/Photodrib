@@ -1,8 +1,4 @@
 ﻿// Copyright 2012 Omar AL Zabir
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Profile;
 using System.Web.Security;
 
@@ -21,16 +17,28 @@ public class UserProfile : ProfileBase
         }
     }
 
-    public string Firstname
+    public string FirstName
     {
-        get { return ((string)(base["Firstname"])); }
-        set { base["Firstname"] = value; Save(); }
+        get { return ((string)(base["FirstName"])); }
+        set { base["FirstName"] = value; Save(); }
     }
 
-    public string Lastname    
+    public string LastName    
     {
-        get { return ((string)(base["Lastname"])); }
-        set { base["Lastname"] = value; Save(); }
+        get { return ((string)(base["LastName"])); }
+        set { base["LastName"] = value; Save(); }
+    }
+
+    public string Email
+    {
+        get { return ((string)(base["Email"])); }
+        set { base["Email"] = value; Save(); }
+    }
+
+    public string BuddyToken
+    {
+        get { return ((string)(base["BuddyToken"])); }
+        set { base["BuddyToken"] = value; Save(); }
     }
 
     public string Tiles

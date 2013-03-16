@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Signup.aspx.cs" Inherits="Signup" MasterPageFile="ServerStuff.master" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Signup.aspx.cs" Inherits="Signup" MasterPageFile="ServerStuff.master" Trace="true" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Header" runat="server">
     Signup
 </asp:Content>
@@ -32,6 +32,14 @@
                 </div>
                 
                 <div class="metro-form-control" style="width: 300px">
+                    <label>Email</label>
+                    <div class="metro-text-box">
+                        <input name="email" type="email" value="<%= Request["email"] ?? "" %>" />
+                        <span class="helper"></span>
+                    </div>
+                </div>
+
+                <div class="metro-form-control" style="width: 300px">
                     <label>First name</label>
                     <div class="metro-text-box">
                         <input name="firstname" type="text" value="<%= Request["firstname"] ?? "" %>" />
@@ -50,10 +58,23 @@
                 <div class="metro-form-control" style="width: 300px">
                     <label>Gender</label>
                     <div class="metro-select">
-                        <select name="gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
+                        <asp:DropDownList ID="gender" OnLoad="gender_Load" runat="server" />
+                    </div>
+                    <span class="helper"></span>
+                </div>
+
+                <div class="metro-form-control" style="width: 300px">
+                    <label>Age</label>
+                    <div class="metro-text-box">
+                        <input name="age" type="number" min="0" max="120" value="<%= Request["age"] ?? "" %>" />
+                        <span class="helper"></span>
+                    </div>
+                </div>
+
+                <div class="metro-form-control" style="width: 300px">
+                    <label>Status</label>
+                    <div class="metro-select">
+                        <asp:DropDownList ID="status" OnLoad="status_Load" runat="server" />
                     </div>
                     <span class="helper"></span>
                 </div>
