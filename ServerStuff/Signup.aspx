@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Signup.aspx.cs" Inherits="Signup" MasterPageFile="ServerStuff.master" Trace="true" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Signup.aspx.cs" Inherits="Signup" MasterPageFile="ServerStuff.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Header" runat="server">
     Signup
 </asp:Content>
@@ -80,7 +80,7 @@
                 </div>
 
                 <label class="metro-check">
-                    <input type="checkbox" name="remember" checked>
+                    <input type="checkbox" name="remember" />
                     <span>Remember Me</span>
                 </label>
 

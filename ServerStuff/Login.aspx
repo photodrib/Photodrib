@@ -34,7 +34,7 @@
                 </div>
 
                 <label class="metro-check">
-                    <input type="checkbox" name="remember" checked>
+                    <input type="checkbox" name="remember" />
                     <span>Remember Me</span>
                 </label>
 

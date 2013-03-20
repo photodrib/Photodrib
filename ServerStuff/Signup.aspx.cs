@@ -19,10 +19,42 @@ public partial class Signup : System.Web.UI.Page
         var email = Request["email"];
         var firstName = Request["firstname"];
         var lastName = Request["lastname"];
-        var gender = int.Parse(Request["ctl00$body$gender"] ?? "0");
-        var age = int.Parse(Request["age"] ?? "0");
-        var status = int.Parse(Request["ctl00$body$status"] ?? "0");
-        var rememberMe = Request["remember"] == "on";
+        int gender;
+        try
+        {
+            gender = int.Parse(Request["ctl00$body$gender"]);
+        }
+        catch (Exception)
+        {
+            gender = 0;
+        }
+        int age;
+        try
+        {
+            age = int.Parse(Request["age"]);
+        }
+        catch (Exception)
+        {
+            age = 0;
+        }
+        int status;
+        try
+        {
+            status = int.Parse(Request["ctl00$body$status"]);
+        }
+        catch
+        {
+            status = 0;
+        }
+        bool rememberMe;
+        try
+        {
+            rememberMe = Request["remember"] == "on";
+        }
+        catch
+        {
+            rememberMe = false;
+        }
 
         if (string.IsNullOrEmpty(password) || password != confirmPassword)
         {
