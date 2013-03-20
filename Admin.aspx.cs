@@ -1,7 +1,12 @@
 ﻿using Buddy.BuddyService;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Net;
 using System.Threading;
+using System.Web;
 using System.Web.Security;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -9,8 +14,6 @@ using System.Web.UI.WebControls;
 public partial class Admin : System.Web.UI.Page
 {
     private const string ADMINTOKEN = "UT-ccad4114-7013-4437-91d1-98d005d8a5d8";
-    public string buddyUserID;
-    private ManualResetEvent buddyEvent;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -18,41 +21,53 @@ public partial class Admin : System.Web.UI.Page
 
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
-
-    }
-
-    private void BuddyGetUserIDCallback(object sender, UserAccount_Profile_GetUserIDFromUserTokenCompletedEventArgs e)
-    {
-        buddyUserID = e.Result;
-        ManualResetEvent waitEvent = Interlocked.CompareExchange(ref buddyEvent, null, null);
-        waitEvent.Set();
-        Trace.Write("Buddy Completed");
-    }
-
-    private void BuddyDeleteUserCallback(object sender, UserAccount_Profile_DeleteAccountCompletedEventArgs e)
-    {
+        string[] del = Request["del"].Split(',');
+        HttpWebRequest req;
+        HttpWebResponse resp;
+        Hashtable users = new Hashtable();
+        foreach (string s in del)
+        {
+            int p = s.LastIndexOf('+');
+            users.Add(s.Substring(0, p), s.Substring(p + 1, s.Length - p - 1));
+        }
+        foreach (string user in users.Keys)
+        {
+            req = (HttpWebRequest)HttpWebRequest.Create("https://webservice.buddyplatform.com/Service/v1/BuddyService.ashx?"
+                + "UserAccount_Profile_DeleteAccount&BuddyApplicationName=" + BuddyApplication.APPNAME
+                + "&BuddyApplicationPassword=" + BuddyApplication.APPPASS
+                + "&UserProfileID=" + users[user] + "&RESERVED=");
+            resp = (HttpWebResponse)req.GetResponse();
+            Membership.DeleteUser(user);
+        }
+        Response.Redirect("Admin.aspx", true);
     }
 
     protected void UserTable_Load(object sender, EventArgs e)
     {
-        BuddyServiceClient client = new BuddyServiceClient(BuddyServiceClient.EndpointConfiguration.soap);
-        client.UserAccount_Profile_GetUserIDFromUserTokenCompleted += new EventHandler<UserAccount_Profile_GetUserIDFromUserTokenCompletedEventArgs>(BuddyGetUserIDCallback);
-        client.UserAccount_Profile_DeleteAccountCompleted += new EventHandler<UserAccount_Profile_DeleteAccountCompletedEventArgs>(BuddyDeleteUserCallback);
         MembershipUserCollection users = Membership.GetAllUsers();
         sum.InnerHtml = "Totally " + users.Count + " user(s).<br /><br />";
         HtmlTableCell[] cells = new HtmlTableCell[4];
         HtmlTableRow row;
+        HttpWebRequest req;
+        HttpWebResponse resp;
+        StreamReader s;
+        string buddyUserID;
         foreach (MembershipUser user in users)
         {
             UserProfile profile = (UserProfile)UserProfile.Create(user.UserName);
-            buddyEvent = new ManualResetEvent(false);
-            client.UserAccount_Profile_GetUserIDFromUserTokenAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, profile.BuddyToken, null);
-            //buddyEvent.WaitOne();
+            req = (HttpWebRequest)HttpWebRequest.Create("https://webservice.buddyplatform.com/Service/v1/BuddyService.ashx?"
+                + "UserAccount_Profile_GetUserIDFromUserToken&BuddyApplicationName=" + BuddyApplication.APPNAME
+                + "&BuddyApplicationPassword=" + BuddyApplication.APPPASS
+                + "&UserToken=" + profile.BuddyToken + "&RESERVED=");
+            resp = (HttpWebResponse)req.GetResponse();
+            s = new StreamReader(resp.GetResponseStream());
+            buddyUserID = s.ReadToEnd();
+            s.Dispose();
             for (int i = 0; i < cells.Length; i++)
             {
                 cells[i] = new HtmlTableCell();
             }
-            cells[0].InnerHtml = "<input type=\"checkbox\" name=\"del\" value=\"" + buddyUserID + "\" />";
+            cells[0].InnerHtml = "<input type=\"checkbox\" name=\"del\" value=\"" + user.UserName + "+" + buddyUserID + "\" />";
             cells[1].InnerText = user.UserName;
             cells[2].InnerText = profile.BuddyToken;
             cells[3].InnerText = buddyUserID;
@@ -62,8 +77,6 @@ public partial class Admin : System.Web.UI.Page
                 row.Cells.Add(cell);
             }
             UserTable.Rows.Add(row);
-            //client.Service.UserAccount_Profile_DeleteAccountAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUserID, null);
-            //Membership.DeleteUser(user.UserName);
         }
     }
 }
