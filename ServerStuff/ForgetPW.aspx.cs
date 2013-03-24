@@ -51,12 +51,13 @@ public partial class ForgetPW : System.Web.UI.Page
         }
         profile = (UserProfile)UserProfile.Create(user.UserName);
         newpw = user.ResetPassword();
+        string hashedPassword = HashString.GetHash(newpw, System.Security.Cryptography.SHA1.Create());
         req = (HttpWebRequest)HttpWebRequest.Create("https://webservice.buddyplatform.com/Service/v1/BuddyService.ashx?"
             + "UserAccount_Profile_Update&BuddyApplicationName=" + BuddyApplication.APPNAME
             + "&BuddyApplicationPassword=" + BuddyApplication.APPPASS
             + "&UserToken=" + profile.BuddyToken
             + "&UserName="
-            + "&UserSuppliedPassword=" + newpw
+            + "&UserSuppliedPassword=" + hashedPassword
             + "&UserGender=&UserAge=&UserEmail=&StatusID=&FuzzLocationEnabled="
             + "&CelebModeEnabled=&ApplicationTag="
             + "&RESERVED=");
