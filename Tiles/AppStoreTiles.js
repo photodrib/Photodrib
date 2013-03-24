@@ -6,31 +6,19 @@
 // The default tile setup offered to new users.
 window.AppStoreTiles = [
     {
-        name: "Spotlight",
+        name: "Albums",
         tiles: [
-           { id: "flickr1", name:"flickr" },
-           { id: "angrybirds1", name: "angrybirds" },
-           { id: "cuttherope1", name: "cutTheRope" }           
+           { id: "album1", name: "album2x2" },
+           { id: "album2", name: "album2x1" },
+           { id: "album3", name: "album1x1" }
         ]
     },
     {
-        name: "Tools",
+        name: "Recent Updates",
         tiles: [
-           { id: "youtube1", name: "youtube" },
-           { id: "amazon1", name: "amazon" },
-           { id: "library1", name: "library" },
-           { id: "news1", name: "news" },
-           { id: "weather1", name: "weather" }
-           
+           { id: "album4", name: "album2x2" }
         ]
     },
-    {
-        name: "Games",
-        tiles: [
-           { id: "angrybirds2", name: "angrybirds" },
-           { id: "cuttherope2", name: "cutTheRope" }   
-        ]
-    }    
 ];
 
 
@@ -44,6 +32,35 @@ window.AppStoreTiles = _.map(window.AppStoreTiles, function (section) {
 
 // Definition of the tiles, their default values.
 window.TileBuilders = {
+
+    album1x1: function (uniqueId) {
+        return {
+            uniqueId: uniqueId,
+            name: "album",
+            label: 'Album',
+            //tileImage: 'img/AppStore/Flickr.png'
+        };
+    },
+
+    album2x1: function (uniqueId) {
+        return {
+            uniqueId: uniqueId,
+            name: "album",
+            size: 'tile-double',
+            label: 'Album',
+            //tileImage: 'img/AppStore/Flickr.png'
+        };
+    },
+
+    album2x2: function (uniqueId) {
+        return {
+            uniqueId: uniqueId,
+            name: "album",
+            size: 'tile-double tile-double-vertical',
+            label: 'Album',
+            //tileImage: 'img/AppStore/Flickr.png'
+        };
+    },
 
     weather: function (uniqueId) {
         return {

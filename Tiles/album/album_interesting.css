@@ -1,0 +1,27 @@
+﻿div.album_item {
+    height: 100%;    
+    text-align: right;
+    
+}
+
+a.album_link {
+    width: 100%;
+    height: 100%;
+}
+
+
+.album_item img {
+    width: 100%;    
+}
+
+div.album_title {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 40px;
+    background: black;
+    opacity: 0.5;
+    padding: 10px;
+    text-align: center;
+}
