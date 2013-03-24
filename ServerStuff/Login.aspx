@@ -37,7 +37,6 @@
                     <input type="checkbox" name="remember" />
                     <span>Remember Me</span>
                 </label>
-
                 <asp:Panel ID="MessagePanel" runat="server" Visible="false">
                     <span class="label label-important">Error</span>
                     <asp:Label ID="Message" runat="server" />
@@ -45,7 +44,7 @@
 
                     
                 <asp:Button ID="LoginButton" OnClick="LoginButton_Click" runat="server" CssClass="metro-button" Text="Login" />
-            
+                <a href="ForgetPW.aspx">Forgot your password?</a>
             </form>    
         </div>
         
