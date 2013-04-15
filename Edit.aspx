@@ -101,7 +101,7 @@
                             <div class="metro-form-control" style="width: 300px">
                                 <label>Contrast</label>
                                 <div class="metro-text-box">
-                                    <input name="contrast" type="number" />
+                                    <input name="contrast" type="number" min="0" max="100" />
                                     <span class="helper"></span>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                             <div class="metro-form-control" style="width: 300px">
                                 <label>Brightness</label>
                                 <div class="metro-text-box">
-                                    <input name="brightness" type="number" />
+                                    <input name="brightness" type="number" min="0" max="100" />
                                     <span class="helper"></span>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                             <div class="metro-form-control" style="width: 300px">
                                 <label>Length</label>
                                 <div class="metro-text-box">
-                                    <input name="length" type="number" />
+                                    <input name="length" type="number" min="1" max="100" />
                                     <span class="helper"></span>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                             <div class="metro-form-control" style="width: 300px">
                                 <label>Width</label>
                                 <div class="metro-text-box">
-                                    <input name="width" type="number" />
+                                    <input name="width" type="number" min="1" max="100" />
                                     <span class="helper"></span>
                                 </div>
                             </div>

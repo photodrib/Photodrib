@@ -1,4 +1,5 @@
 using System;
+using Buddy;
 using Buddy.BuddyService;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,13 +14,30 @@ using System.Web.UI.WebControls;
 
 public partial class Edit : System.Web.UI.Page
 {
+    int photo_id;
+    AuthenticatedUser buddyUser;
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        buddyUser = Session["buddyUser"] as AuthenticatedUser;
+        if (buddyUser == null)
+        {
+
+        }
         if (!Profile.IsAnonymous)
             Response.Cookies.Add(new HttpCookie("p", Profile.Tiles)
             {
                 Expires = DateTime.Now.AddDays(30)
             });
+        try
+        {
+            photo_id = int.Parse(Request["photo_id"]);
+        }
+        catch (Exception)
+        {
+            
+        }
+
     }
 
     private bool IsCombinedJSOlder(string path)
@@ -51,6 +69,24 @@ public partial class Edit : System.Web.UI.Page
         }
 
     }
-    protected void EditButton_Click(object sender, EventArgs e) { }
+    protected void EditButton_Click(object sender, EventArgs e) 
+    { 
+    }
+    protected Picture GetPhoto() 
+    {
+        var task = buddyUser.GetPicture(photo_id);
+        task.Wait();
+        if (task.IsCanceled || task.IsFaulted) return null;
+        return task.Result;
+    }
+    protected string ShowImage()
+    {
+        var task = buddyUser.GetPicture(photo_id);
+        task.Wait(); 
+        if (task.IsCanceled || task.IsFaulted) return null;
+        return task.Result.FullUrl;
+
+    }
+
 
 }
