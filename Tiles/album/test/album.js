@@ -171,9 +171,9 @@ function showMessage(msg, color) {
     var p = document.createElement("p");
     p.innerText = msg;
     p.style['background-color'] = color ? color : '#000';
-    setTimeout(function () {
-        message.removeChild(message.childNodes[0]);
-    }, 5000);
+    //setTimeout(function () {
+    //    message.removeChild(message.childNodes[0]);
+    //}, 5000);
     message.appendChild(p);
 }
 
@@ -191,15 +191,15 @@ function handleReaderLoadEnd(e) {
         if (xhr.readyState == 4) {
             if (busy) busy--;
             progressBar.value = progressBar.max;
-            if (xhr.status != 200) {
-                showMessage("Error code = " + xhr.status, '#700');
-            } else {
+            //if (xhr.status != 200) {
+            //    showMessage("Error code = " + xhr.status, '#700');
+            //} else {
                 showMessage(xhr.responseText);
                 /*var resp = JSON.parse(xhr.responseText);
                 var color = resp[0] == 0 ? '#070' : '#700'
                 showMessage(resp[1], color);
                 getPhotos();*/
-            }
+            //}
             setTimeout(function () {
                 if (--progressBar.count == 0) {
                     progressBar.style.visibility = 'hidden';

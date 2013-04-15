@@ -15,6 +15,13 @@ span {
     user-select: none;
 }
 
+.block2 {
+    width: 800px;
+    margin: auto;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+}
+
 #dropbox {
     text-align: center;
     line-height: 100px;

@@ -13,7 +13,11 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
-        if (buddyUser == null) return;
+        if (buddyUser == null)
+        {
+            Response.Write("null");
+            return;
+        }
         int albumID;
         try
         {
@@ -21,24 +25,41 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
         }
         catch (Exception)
         {
+            Response.Write("null");
             return;
         }
         string filename = Request.Headers["FILE_NAME"];
-        if (filename == null) return;
+        if (filename == null)
+        {
+            Response.Write("null");
+            return;
+        }
         string input;
         using (var sr = new StreamReader(Request.InputStream))
         {
             input = sr.ReadToEnd();
         }
-        if (input == "") return;
-        byte[] picture = System.Text.Encoding.Default.GetBytes(input);
+        if (input == "")
+        {
+            Response.Write("null");
+            return;
+        }
+        byte[] picture = Convert.FromBase64String(input);
         var getAlbum = buddyUser.PhotoAlbums.Get(albumID);
         getAlbum.Wait();
-        if (getAlbum.IsCanceled || getAlbum.IsFaulted) return;
+        if (getAlbum.IsCanceled || getAlbum.IsFaulted)
+        {
+            Response.Write("null");
+            return;
+        }
         PhotoAlbum album = getAlbum.Result;
         var upload = album.AddPicture(picture);
         upload.Wait();
-        if (upload.IsCanceled || upload.IsFaulted) return;
+        if (upload.IsCanceled || upload.IsFaulted)
+        {
+            Response.Write("null");
+            return;
+        }
         Response.Write(Json.Encode(upload.Result));
     }
 }

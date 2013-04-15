@@ -12,7 +12,11 @@ public partial class Tiles_album_GetAlbum : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
-        if (buddyUser == null) return;
+        if (buddyUser == null)
+        {
+            Response.Write("null");
+            return;
+        }
         int albumID;
         try
         {
@@ -20,6 +24,7 @@ public partial class Tiles_album_GetAlbum : System.Web.UI.Page
         }
         catch (Exception)
         {
+            Response.Write("null");
             return;
         }
         var task = buddyUser.PhotoAlbums.Get(albumID);
@@ -31,8 +36,12 @@ public partial class Tiles_album_GetAlbum : System.Web.UI.Page
         {
             return;
         }
-        if (task.IsCanceled || task.IsFaulted) return;
-        var album = task.Result;
+        if (task.IsCanceled || task.IsFaulted)
+        {
+            Response.Write("null");
+            return;
+        }
+        PhotoAlbum album = task.Result;
         Response.Write(Json.Encode(album));
     }
 }
