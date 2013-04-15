@@ -58,8 +58,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 				
 			</ul>
 		</div>
-		<div style="border-color:#FFA500;border-style:solid">
-                    <img src="001.JPG" data-bind="attr: {src: photo}"  />
+		<div style="height: 600px; width: 800px">
+                    <img src="001.JPG" data-bind="attr: {src: photo}" style="border-color:#FFA500;border-style:solid"  />
         </div>
 		<div id="googleMap" style="width: 500px; height: 300px"></div>
 		
