@@ -1,5 +1,6 @@
 ﻿del Combined.js
 type jquery-1.7.2.min.js > Combined.js
+type jquery.url.js > Combined.js
 type jquery-ui-1.8.21.custom.min.js >> Combined.js
 type jQueryEnhancement.js >> Combined.js
 type jQuery.MouseWheel.js >> Combined.js

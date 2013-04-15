@@ -12,6 +12,7 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null)
         {

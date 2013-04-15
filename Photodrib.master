@@ -36,8 +36,9 @@
 	file in the /js folder to generate the CombinedDashboard.js file again. And then don't
 	forget to update the ?v=14#. Otherwise user's will have cached copies in their browser
 	and won't get the newly deployed file. -->
-
+	
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.url.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.21.custom.min.js"></script>
 <script type="text/javascript" src="js/jQueryEnhancement.js"></script>
 <script type="text/javascript" src="js/jQuery.MouseWheel.js"></script>

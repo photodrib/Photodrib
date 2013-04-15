@@ -1,31 +1,34 @@
 ﻿/// <reference path="../../../js/jquery-1.7.2.min.js" />
+/// <reference path="../../../js/jquery.url.js" />
 
 $(document).ready(function () {
-    var url = "http://api.flickr.com/services/feeds/groups_pool.gne?id=1642523@N22&format=json&jsoncallback=?";
+    var albumID = parseInt($.url.param('id'));
+    var url = "../GetAlbum.aspx?id=" + albumID;
 
     $.getJSON(url, function (data) {
         var ctr = 0;
 
         var htmlString = "<table><tr>";
 
-        $.each(data.items.reverse(), function (i, item) {
-            if (item.tags.length < 150) {
-                var sourceSquare = item.media.m;
-                var sourceOrig = (item.media.m).replace("_m.jpg", ".jpg");
+        $.each(data.Pictures.reverse(), function (i, item) {
+            //if (item.tags.length < 150) {
+            var sourceSquare = item.ThumbnailUrl;
+            var sourceOrig = item.FullUrl;
+            var link = '../ShowPhoto.html?id=' + item.PhotoID;
 
-                htmlString += '<td class="album_item">'
-                    +'<a target="_blank" href="' + item.link + '" class="link" title="' + item.title + '">';
-                htmlString += '<img title="' + item.title +
-                    '" src="' + sourceOrig + '" ';
-                htmlString += ' alt="' + item.title +
-                    '" />';
-                htmlString += '</a><div class="album_title">' + item.title + '</div>' +
-                    '</td>';
+            htmlString += '<td class="album_item">'
+                + '<a target="_blank" href="' + link + '" class="link" title="' + item.Comment + '">';
+            htmlString += '<img title="' + item.Comment +
+                '" src="' + sourceOrig + '" ';
+            htmlString += ' alt="' + item.Comment +
+                '" />';
+            htmlString += '</a><div class="album_title">' + item.Comment + '</div>' +
+                '</td>';
 
-                //$('#images').append($(htmlString));
+            //$('#images').append($(htmlString));
 
-                ctr = ctr + 1;
-            }
+            ctr = ctr + 1;
+            //}
 
             
         });
