@@ -8,9 +8,14 @@
 	<meta name="author" content="Han Zuohao, Wang Yuxi, Wu Pangbo, Zhang Sheng" />
 	<meta name="apple-mobile-web-app-capable" content="yes" /> 
 	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/jquery.url.js"></script>
     <script src="js/jquery-ui-1.8.21.custom.min.js"></script>
     <script src="js/Knockout-2.1.0.js"></script>
-	
+	<script>
+	    function init() {
+	        var id = $.url.param('id');
+	    }
+	</script>
 	<title>Photodrib</title>
 
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -56,33 +61,33 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	    
 	
 </head>
-<body onload="initialize()" onunload="GUnload()">
+<body onunload="GUnload()">
 	
     <div id="body" class="unselectable">
 
 
-        <div calss="metro appnavbar" style="margin-top: 50px; margin-right: 5px;">
+        <div class="metro appnavbar" style="margin-top: 50px; margin-right: 5px;">
 			<ul>
-				<a class="backbutton" href="javascript:closeApp()">
-				<img src="img/Metro-Back-48.png" alt="Go back to Dashboard">
-				</a>
-				<h1 class="start">View Photo</h1>
+                <li>
+				    <a class="backbutton" href="javascript:closeApp()">
+				    <img src="img/Metro-Back-48.png" alt="Go back to Dashboard">
+				    </a>
+                </li>
+                <li>
+				    <h1 class="start">View Photo</h1>
+                </li>
 				
 			</ul>
 		</div>
-		<div style="height: 600px; width: 800px">
+		<div style="height: 600px; width: 800px; margin-top: 200px;">
                     <img src="001.JPG" data-bind="attr: {src: photo}" style="border-color:#FFA500;border-style:solid"  />
         </div>
-		<div id="googleMap" style="width: 500px; height: 380px"></div>
+		<div id="googleMap" style="width: 500px; height: 380px;"></div>
 		
-
+    </div>
 
 
 </body>
-
-
-
-    </script>
     
 
 	

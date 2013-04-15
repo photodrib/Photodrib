@@ -572,3 +572,7 @@ border: 1px solid #AAAAAA;
         background-image: url("../img/wallpapers/In Bloom.jpg");
         background-repeat: repeat;    
 }
+
+#googleMap img {
+    max-width: none;
+}
