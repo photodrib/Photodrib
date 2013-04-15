@@ -21,6 +21,7 @@ function init() {
         var reader = new FileReader();
         reader.onloadend = handleReaderLoadEnd;
         reader.filename = filename;
+        reader.albumID = parseInt(window.prompt('Album ID:', ''));
         reader.readAsDataURL(file);
     }, false);
     progressBar.style.visibility = 'hidden';
@@ -180,7 +181,7 @@ function handleReaderLoadEnd(e) {
     busy++;
     var data = e.target.result.split(',')[1];
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../UploadPhoto.aspx', true);
+    xhr.open('POST', '../UploadPhoto.aspx?id=' + e.target.albumID, true);
     xhr.setRequestHeader('FILE_NAME', e.target.filename);
     xhr.upload.addEventListener('progress', function (e) {
         progressBar.value = e.loaded;
