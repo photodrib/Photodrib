@@ -61,8 +61,18 @@ public partial class ForgetPW : System.Web.UI.Page
             + "&UserGender=&UserAge=&UserEmail=&StatusID=&FuzzLocationEnabled="
             + "&CelebModeEnabled=&ApplicationTag="
             + "&RESERVED=");
-        req.GetResponse();
-
+        try
+        {
+            req.GetResponse();
+        }
+        catch (WebException)
+        {
+            MessagePanel.Visible = true;
+            MessageTitle.Attributes["class"] = "label label-important";
+            MessageTitle.InnerText = "Error";
+            Message.Text = "Cannot connect to the server. Please try again later";
+            return;
+        }
         mailMessage = new MailMessage();
         mailMessage.From = new MailAddress("admin@photodrib.com", "Photodrib Admin");
         mailMessage.To.Add(user.Email);

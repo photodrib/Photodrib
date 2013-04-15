@@ -16,13 +16,23 @@ public partial class Login : System.Web.UI.Page
         string hashedPassword = HashString.GetHash(password, System.Security.Cryptography.SHA1.Create());
         BuddyClient client = BuddyApplication.Create();
         var buddyResp = client.Login(username, hashedPassword, null);
+        try
+        {
+            buddyResp.Wait();
+        }
+        catch (Exception)
+        {
+            MessagePanel.Visible = true;
+            Message.Text = "Cannot connect to the server";
+            return;
+        }
         AuthenticatedUser buddyUser = null;
         try
         {
             buddyUser = buddyResp.Result;
         }
         catch (AggregateException) { }
-        if (Membership.ValidateUser(username, password) && buddyResp.Status == System.Threading.Tasks.TaskStatus.RanToCompletion)
+        if (Membership.ValidateUser(username, password) && !buddyResp.IsCanceled && !buddyResp.IsFaulted)
         {
             Session["buddyUser"] = buddyUser;
             Response.Cookies.Add(FormsAuthentication.GetAuthCookie(username, rememberMe));
