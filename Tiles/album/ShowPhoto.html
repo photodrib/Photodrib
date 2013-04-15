@@ -1,0 +1,59 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Photodrib" />
+	<meta name="author" content="Han Zuohao, Wang Yuxi, Wu Pangbo, Zhang Sheng" />
+	<meta name="apple-mobile-web-app-capable" content="yes" /> 
+	<script src="../../js/jquery-1.7.2.min.js"></script>
+	<script src="../../js/jquery.url.js"></script>
+    <script src="../../js/jquery-ui-1.8.21.custom.min.js"></script>
+    <script src="../../js/Knockout-2.1.0.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD4AmOld0gvXFP_LjlCibt75nf3cRZ9GEc&sensor=false"></script>
+    <script src="ShowPhoto.js"></script>
+	<title>Photodrib</title>
+
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../../css/Photodrib.css">
+	
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+</head>
+<body onunload="GUnload()">
+	
+    <div id="body" class="unselectable">
+
+
+        <div class="metro appnavbar" style="margin-top: 50px; margin-right: 5px;">
+			<ul>
+                <li>
+				    <a class="backbutton" href="javascript:closeApp()">
+				    <img src="../../img/Metro-Back-48.png" alt="Go back to Dashboard">
+				    </a>
+                </li>
+                <li>
+				    <h1 class="start">View Photo</h1>
+                </li>
+				
+			</ul>
+		</div>
+		<div style="height: 600px; width: 800px; margin-top: 200px;">
+            <img src="../../001.JPG" data-bind="attr: {src: photo}" style="border-color:#FFA500;border-style:solid"  />
+        </div>
+		<div id="googleMap" style="width: 500px; height: 380px;"></div>
+		
+    </div>
+
+
+</body>
+    
+
+	
+</html>
