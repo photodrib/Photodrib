@@ -27,18 +27,30 @@ src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD4AmOld0gvXFP_LjlCibt75nf3
 </script>
 
 <script>
+var myCenter=new google.maps.LatLng(51.508742,-0.120850);
+var marker;
+
 function initialize()
 {
 var mapProp = {
-  center:new google.maps.LatLng(51.508742,-0.120850),
+  center:myCenter,
   zoom:5,
   mapTypeId:google.maps.MapTypeId.ROADMAP
   };
+
 var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+marker=new google.maps.Marker({
+  position:myCenter,
+  animation:google.maps.Animation.BOUNCE
+  });
+
+marker.setMap(map);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+	
 	
 
 	    
@@ -61,7 +73,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		<div style="height: 600px; width: 800px">
                     <img src="001.JPG" data-bind="attr: {src: photo}" style="border-color:#FFA500;border-style:solid"  />
         </div>
-		<div id="googleMap" style="width: 500px; height: 300px"></div>
+		<div id="googleMap" style="width: 800px; height: 600sspx"></div>
 		
 
 
