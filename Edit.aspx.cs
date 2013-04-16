@@ -16,13 +16,15 @@ public partial class Edit : System.Web.UI.Page
 {
     AuthenticatedUser buddyUser;
     int photoID;
+    
     protected void Page_Load(object sender, EventArgs e)
     {
        
         buddyUser = Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null)
         {
-
+            Response.Write("null");
+            return;
         }
         if (!Profile.IsAnonymous)
             Response.Cookies.Add(new HttpCookie("p", Profile.Tiles)
