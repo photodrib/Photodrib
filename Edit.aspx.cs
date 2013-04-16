@@ -26,11 +26,6 @@ public partial class Edit : System.Web.UI.Page
             Response.Write("null");
             return;
         }
-        if (!Profile.IsAnonymous)
-            Response.Cookies.Add(new HttpCookie("p", Profile.Tiles)
-            {
-                Expires = DateTime.Now.AddDays(30)
-            });
         try
         {
             photoID = int.Parse(Request["id"]);
