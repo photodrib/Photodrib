@@ -37,7 +37,15 @@ public partial class Edit : System.Web.UI.Page
             picture.Src = "./img/AngryBirds.jpg";
             return;
         }
-        var task =  buddyUser.GetPicture(photoID);
+        try
+        {
+            var task = buddyUser.GetPicture(photoID);
+        }
+        catch (Exception)
+        {
+
+            Response.Write(photoID);
+        }
         task.Wait();
         if (task.IsCanceled || task.IsFaulted)
         {
@@ -165,13 +173,6 @@ public partial class Edit : System.Web.UI.Page
             wh.WaitOne();
             client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, newID.ToString(), "Brightness", brightness.ToString(), "1");
         }
-    }
-    protected Picture GetPhoto(int photo_id) 
-    {
-        var task = buddyUser.GetPicture(photo_id);
-        task.Wait();
-        if (task.IsCanceled || task.IsFaulted) return null;
-        return task.Result;
     }
 
 }
