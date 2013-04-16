@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Buddy;
 using System.Web.Helpers;
+using Buddy.BuddyService;
 
 public partial class Tiles_album_GetAlbum : System.Web.UI.Page
 {
@@ -21,28 +22,35 @@ public partial class Tiles_album_GetAlbum : System.Web.UI.Page
         int albumID;
         try
         {
-            albumID = int.Parse(Request["id"]);
+            albumID = int.Parse(Request["aid"]);
         }
         catch (Exception)
         {
             Response.Write("null");
             return;
         }
-        var task = buddyUser.PhotoAlbums.Get(albumID);
+        int uid;
         try
         {
-            task.Wait();
+            uid = int.Parse(Request["uid"]);
         }
         catch (Exception)
-        {
-            return;
-        }
-        if (task.IsCanceled || task.IsFaulted)
         {
             Response.Write("null");
             return;
         }
-        PhotoAlbum album = task.Result;
-        Response.Write(Json.Encode(album).Replace(",\"Pictures\":[]", ""));
+        BuddyServiceClient client = new BuddyServiceClient();
+        client.Pictures_PhotoAlbum_GetCompleted += (object sdr, Pictures_PhotoAlbum_GetCompletedEventArgs evt) =>
+        {
+            if (evt.Cancelled)
+            {
+                Response.Write("null");
+                return;
+            }
+            var album = evt.Result;
+            Response.Write(Json.Encode(album));
+        };
+        client.Pictures_PhotoAlbum_GetAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, uid.ToString(), albumID.ToString());
+        //Response.Write(Json.Encode(album).Replace(",\"Pictures\":[]", ""));
     }
 }

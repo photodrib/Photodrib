@@ -6,16 +6,27 @@ using System.Web.Helpers;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Buddy;
+using Buddy.BuddyService;
 
 public partial class Tiles_album_GetPhoto : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        int id;
+        int pid;
         try
         {
-            id = int.Parse(Request["id"]);
+            pid = int.Parse(Request["pid"]);
+        }
+        catch (Exception)
+        {
+            Response.Write("null");
+            return;
+        }
+        int uid;
+        try
+        {
+            uid = int.Parse(Request["uid"]);
         }
         catch (Exception)
         {
@@ -28,14 +39,17 @@ public partial class Tiles_album_GetPhoto : System.Web.UI.Page
             Response.Write("null");
             return;
         }
-        var task = buddyUser.GetPicture(id);
-        task.Wait();
-        if (task.IsCanceled || task.IsFaulted)
+        BuddyServiceClient client = new BuddyServiceClient();
+        client.Pictures_Photo_GetCompleted += (object sdr, Pictures_Photo_GetCompletedEventArgs evt) =>
         {
-            Response.Write("null");
-            return;
-        }
-        Picture pic = task.Result;
-        Response.Write(Json.Encode(pic));
+            if (evt.Cancelled)
+            {
+                Response.Write("null");
+                return;
+            }
+            var pic = evt.Result;
+            Response.Write(Json.Encode(pic[0]));
+        };
+        client.Pictures_Photo_GetAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, uid.ToString(), pid.ToString());
     }
 }

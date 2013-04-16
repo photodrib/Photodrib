@@ -5,11 +5,12 @@ function init() {
 }
 
 function initialize() {
-    var id = $.url.param('id');
+    var uid = $.url.param('uid');
+    var pid = $.url.param('pid');
 
-    $.getJSON('GetPhoto.aspx?id=' + id, function (data) {
-        bigImage.src = data.FullUrl;
-        bigImage.title = bigImage.alt = data.Comment;
+    $.getJSON('GetPhoto.aspx?uid=' + uid + '&pid=' + pid, function (data) {
+        bigImage.src = data.FullPhotoURL;
+        bigImage.title = bigImage.alt = data.PhotoComment;
         bigImage.style.visibility = 'visible';
 
         var myCenter = new google.maps.LatLng(data.Latitude, data.Longitude);

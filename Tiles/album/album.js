@@ -8,22 +8,23 @@
 
 function album_load(tile, div) {
     var albumID = parseInt($.url.param('id'));
-    var url = "Tiles/album/GetAlbum.aspx?id=" + 5401212;
+    var url = 'Tiles/album/GetAlbum.aspx?uid=3295454&aid=5401212';
     
     $.getJSON(url, function (data) {        
         var ctr = 0;
-        $.each(data.Pictures.reverse(), function (i, item) {
-            var sourceSquare = item.ThumbnailUrl;
-            var sourceOrig = item.FullUrl;
+        $.each(data.reverse(), function (i, item) {
+            var sourceSquare = item.ThumbnailPhotoURL;
+            var sourceOrig = item.FullPhotoURL;
+            var comment = item.PhotoComment;
 
             var htmlString = '<div class="album_item">' 
                 //+ '<a target="_blank" href="' + sourceOrig + '" class="link" title="' + item.title + '">';
-            htmlString += '<img title="' + item.Comment +
+            htmlString += '<img title="' + comment +
                 '" src="' + sourceOrig + '" ';
-            htmlString += 'alt="' + item.Comment +
+            htmlString += 'alt="' + comment +
                 '" />';
             htmlString += '</a>'
-                + '<div class="album_title">' + item.Comment + '</div>' +
+                + '<div class="album_title">' + comment + '</div>' +
                 '</div>';
 
             tile.slides.push(htmlString);
