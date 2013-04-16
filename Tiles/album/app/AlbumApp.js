@@ -2,6 +2,13 @@
 /// <reference path="../../../js/jquery.url.js" />
 
 $(document).ready(function () {
+  
+        $('a.backbutton').hover(function () { //mouse in
+            $(this).animate({ paddingLeft: '20px' }, 400);
+        }, function () { //mouse out
+            $(this).animate({ paddingLeft: 0 }, 400);
+        });
+    
     var albumID = parseInt($.url.param('id'));
     var url = "../GetAlbum.aspx?id=" + albumID;
 
