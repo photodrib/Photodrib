@@ -133,7 +133,7 @@
                         </div>
                     </td>
                     <td>
-                            <img id="picture" src="" runat="server" />
+                            <img id="picture"  />
                        
                     </td>
                         
