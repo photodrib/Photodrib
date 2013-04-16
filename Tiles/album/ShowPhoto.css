@@ -1,0 +1,16 @@
+﻿#imgContainer {
+    height: 600px;
+    width: 800px;
+    margin-top: 200px;
+}
+
+#bigImage {
+    border-color: #FFA500;
+    border-style: solid;
+    visibility: hidden;
+}
+
+#googleMap {
+    width: 500px;
+    height: 380px;
+}
