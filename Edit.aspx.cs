@@ -14,15 +14,14 @@ using System.Web.UI.WebControls;
 
 public partial class Edit : System.Web.UI.Page
 {
-    AuthenticatedUser buddyUser;
-    int photoID;
+
     
     protected void Page_Load(object sender, EventArgs e)
     {
-       
-        buddyUser = Session["buddyUser"] as AuthenticatedUser;
+
+        AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
         
-        photoID = int.Parse(Request["id"]);
+        int photoID = int.Parse(Request["id"]);
        
     }
 
@@ -59,6 +58,9 @@ public partial class Edit : System.Web.UI.Page
     {  
         int contrast, brightness, newID = -1;
         float resize;
+        AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
+
+        int photoID = int.Parse(Request["id"]);
         try
         {
             resize = float.Parse(Request["resize"])/100;
