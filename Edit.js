@@ -3,7 +3,7 @@
 function initialize() {
     var id = $.url.param('id');
     alert(id);
-    $.getJSON('GetPhoto.aspx?id=' + id, function (data) {
+    $.getJSON('./Tiles/album/GetPhoto.aspx?id=' + id, function (data) {
         alert(JSON.stringify(data.FullUrl));
         picture.src = data.FullUrl;
         picture.title = data.Comment;
