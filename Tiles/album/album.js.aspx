@@ -1,4 +1,5 @@
-﻿/// <reference path="../../js/Underscore.js" />
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="album.js.aspx.cs" Inherits="Tiles_album_album_js" %>
+/// <reference path="../../js/Underscore.js" />
 /// <reference path="../../js/jquery-1.7.2.min.js" />
 /// <reference path="../../js/jquery.url.js" />
 // Copyright 2012 Omar AL Zabir
@@ -7,7 +8,7 @@
 
 
 function album_load(tile, div) {
-    var url = 'Tiles/album/GetAlbum.aspx?uid=3295454&aid=5401212';
+    var url = 'Tiles/album/GetAlbum.aspx?uid=<%= Request["uid"] %>&aid=<%= Request["aid"] %>';
     
     $.getJSON(url, function (data) {        
         var ctr = 0;

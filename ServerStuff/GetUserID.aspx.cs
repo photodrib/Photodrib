@@ -8,7 +8,7 @@ using System.Web.Helpers;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Tiles_album_GetAlbumList : System.Web.UI.Page
+public partial class ServerStuff_GetUserID : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,27 +20,17 @@ public partial class Tiles_album_GetAlbumList : System.Web.UI.Page
             Response.Write("null");
             return;
         }
-        int userID;
-        try
-        {
-            userID = int.Parse(Request["id"]);
-        }
-        catch (Exception)
-        {
-            Response.Write("null");
-            return;
-        }
         BuddyServiceClient client = new BuddyServiceClient();
-        client.Pictures_PhotoAlbum_GetListCompleted += (object sdr, Pictures_PhotoAlbum_GetListCompletedEventArgs evt) =>
+        client.UserAccount_Profile_GetUserIDFromUserTokenCompleted += (object sdr, UserAccount_Profile_GetUserIDFromUserTokenCompletedEventArgs evt) =>
         {
             if (evt.Cancelled)
             {
                 Response.Write("null");
                 return;
             }
-            var albumList = evt.Result;
-            Response.Write(Json.Encode(albumList));
+            int uid = int.Parse(evt.Result);
+            Response.Write(Json.Encode(uid));
         };
-        client.Pictures_PhotoAlbum_GetListAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, userID.ToString());
+        client.UserAccount_Profile_GetUserIDFromUserTokenAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, null);
     }
 }

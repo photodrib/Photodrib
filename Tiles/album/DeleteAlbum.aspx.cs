@@ -13,6 +13,7 @@ public partial class ServerStuff_DeleteAlbum : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        Response.ContentType = "text/plain";
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null)
         {
