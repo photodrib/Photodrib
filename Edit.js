@@ -6,7 +6,7 @@ function initialize() {
     $.getJSON('./Tiles/album/GetPhoto.aspx?id=' + id, function (data) {
         alert(JSON.stringify(data.FullUrl));
         picture.src = data.FullUrl;
-        picture.title = data.Comment;
+        picture.title = id;
         picture.style.visibility = 'visible';
     });
 }

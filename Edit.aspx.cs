@@ -98,6 +98,7 @@ public partial class Edit : System.Web.UI.Page
             brightness = -1;
         }
         BuddyServiceClient client = new BuddyServiceClient();
+         
         /*
          * client.Pictures_Filters_GetListCompleted += (object sdr, Pictures_Filters_GetListCompletedEventArgs evt) =>
          {

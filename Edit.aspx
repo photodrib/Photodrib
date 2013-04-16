@@ -123,8 +123,8 @@
                                     <span class="helper"></span>
                                 </div>
                             </div>
-                        
 
+                            <input type="hidden" name="id" value="<%= Request["id"] %>" />
 
                             <br /><br /><br />
                             <asp:Button ID="EditButton" OnClick="EditButton_Click" runat="server" CssClass="metro-button" Text="Edit" />
@@ -136,10 +136,10 @@
                             <img id="picture"  />
                        
                     </td>
-                        
-                </tr>   
-                            
-            </table></form> 
+                    </tr> 
+                </table>
+
+            </form> 
         </div>
         
     </div> 
