@@ -5,6 +5,7 @@ var geocoder;
 var map;
 
 function init() {
+    albumID = $.url.param('id');
     dropbox.addEventListener("dragover", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -21,7 +22,7 @@ function init() {
         var reader = new FileReader();
         reader.onloadend = handleReaderLoadEnd;
         reader.filename = filename;
-        reader.albumID = parseInt(window.prompt('Album ID:', ''));
+        reader.albumID = albumID;
         reader.readAsDataURL(file);
     }, false);
     progressBar.style.visibility = 'hidden';
@@ -34,7 +35,7 @@ function init() {
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
 }
 
 function codeAddress() {
@@ -80,7 +81,6 @@ function showMessage(msg, color) {
 }
 
 function handleReaderLoadEnd(e) {
-    busy++;
     var data = e.target.result.split(',')[1];
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'UploadPhoto.aspx?id=' + e.target.albumID + '&lat=' + lat + '&lng=' + lng, true);
@@ -91,7 +91,6 @@ function handleReaderLoadEnd(e) {
     }, false);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
-            if (busy) busy--;
             progressBar.value = progressBar.max;
             //if (xhr.status != 200) {
             //    showMessage("Error code = " + xhr.status, '#700');

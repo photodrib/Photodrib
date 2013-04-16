@@ -25,8 +25,9 @@ span {
 #dropbox {
     margin-top: 200px;
     text-align: center;
-    line-height: 100px;
-    border: solid 1px;
+    line-height: 150px;
+    border: 1px solid #00ff21;
+    color: #00ff21;
     cursor: default;
 }
 
@@ -38,4 +39,10 @@ span {
     width: 100%;
     padding: 3px 10px 5px 10px;
     color: #fff;
+}
+
+#googleMap {
+    height: 500px;
+    width: 500px;
+    margin: auto;
 }

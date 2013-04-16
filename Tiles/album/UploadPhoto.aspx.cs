@@ -16,7 +16,7 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null)
         {
-            Response.Write("null");
+            Response.Write("null1");
             return;
         }
         int albumID;
@@ -26,13 +26,31 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
         }
         catch (Exception)
         {
-            Response.Write("null");
+            Response.Write("null2");
             return;
+        }
+        double lat;
+        try
+        {
+            lat = double.Parse(Request["lat"]);
+        }
+        catch (Exception)
+        {
+            lat = 0;
+        }
+        double lng;
+        try
+        {
+            lng = double.Parse(Request["lng"]);
+        }
+        catch (Exception)
+        {
+            lng = 0;
         }
         string filename = Request.Headers["FILE_NAME"];
         if (filename == null)
         {
-            Response.Write("null");
+            Response.Write("null3");
             return;
         }
         string input;
@@ -42,7 +60,7 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
         }
         if (input == "")
         {
-            Response.Write("null");
+            Response.Write("null4");
             return;
         }
         byte[] picture = Convert.FromBase64String(input);
@@ -50,17 +68,17 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
         getAlbum.Wait();
         if (getAlbum.IsCanceled || getAlbum.IsFaulted)
         {
-            Response.Write("null");
+            Response.Write("null5");
             return;
         }
         PhotoAlbum album = getAlbum.Result;
-        var upload = album.AddPicture(picture);
+        var upload = album.AddPicture(picture, filename, lat, lng);
         upload.Wait();
         if (upload.IsCanceled || upload.IsFaulted)
         {
-            Response.Write("null");
+            Response.Write("null6");
             return;
         }
-        Response.Write(Json.Encode(upload.Result));
+        Response.Write(Json.Encode(upload.Result) + Request["lat"] + "," + Request["lng"]);
     }
 }
