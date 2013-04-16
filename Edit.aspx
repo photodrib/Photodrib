@@ -117,9 +117,9 @@
                             </div>
 
                             <div class="metro-form-control" style="width: 300px">
-                                <label>Resize</label>
+                                <label>Resize (%)</label>
                                 <div class="metro-text-box">
-                                    <input name="resize" type="number" min="0" max="10" />
+                                    <input name="resize" type="number" min="0" max="4" />
                                     <span class="helper"></span>
                                 </div>
                             </div>

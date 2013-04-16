@@ -15,7 +15,7 @@ using System.Web.UI.WebControls;
 public partial class Edit : System.Web.UI.Page
 {
     AuthenticatedUser buddyUser;
-
+    int photoID;
     protected void Page_Load(object sender, EventArgs e)
     {
         buddyUser = Session["buddyUser"] as AuthenticatedUser;
@@ -23,7 +23,6 @@ public partial class Edit : System.Web.UI.Page
         {
 
         }
-        int photo_id;
         if (!Profile.IsAnonymous)
             Response.Cookies.Add(new HttpCookie("p", Profile.Tiles)
             {
@@ -31,14 +30,14 @@ public partial class Edit : System.Web.UI.Page
             });
         try
         {
-            photo_id = int.Parse(Request["photo_id"]);
+            photoID = int.Parse(Request["id"]);
         }
         catch (Exception)
         {
             picture.Src = "./img/AngryBirds.jpg";
             return;
         }
-        var task =  buddyUser.GetPicture(photo_id);
+        var task =  buddyUser.GetPicture(photoID);
         task.Wait();
         if (task.IsCanceled || task.IsFaulted)
         {
@@ -81,48 +80,91 @@ public partial class Edit : System.Web.UI.Page
     }
     protected void EditButton_Click(object sender, EventArgs e) 
     {  
-        HttpWebRequest req;
-        int resize, contrast, brightness;
+        int contrast, brightness, newID = -1;
+        float resize;
         try
         {
-            resize = int.Parse(Request["resize"]);
+            resize = float.Parse(Request["resize"])/100;
+            if (resize > 4)
+            {
+                resize = -1;
+            }
         }
-        catch
+        catch (Exception)
         {
             resize = -1;
         }
         try
         {
             contrast = int.Parse(Request["contrast"]);
+            if (contrast > 100)
+            {
+                contrast = -1;
+            }
         }
-        catch
+        catch (Exception)
         {
             contrast = -1;
         }
         try
         {
             brightness = int.Parse(Request["brightness"]);
+            if (brightness > 100)
+            {
+                brightness = -1;
+            }
         }
-        catch
+        catch (Exception)
         {
             brightness = -1;
         }
         BuddyServiceClient client = new BuddyServiceClient();
-        client.Pictures_Filters_GetListCompleted += (object sdr, Pictures_Filters_GetListCompletedEventArgs evt) =>
-        {
+        /*
+         * client.Pictures_Filters_GetListCompleted += (object sdr, Pictures_Filters_GetListCompletedEventArgs evt) =>
+         {
             if (evt.Cancelled)
             {
                 return;
             }
             var rst = evt.Result;
-            var a = rst[0];
-            Console.WriteLine(a);
-            
-
-
-
+            var a=rst[0];
+            for (var i = 0; i < rst.Count; i++)
+            {
+                a = rst[i];
+                Response.Write(a.FilterID);
+                Response.Write("\n");
+                Response.Write(a.ParameterList);
+                Response.Write("\n");
+                Response.Write(a.FilterName);
+                Response.Write("\n");
+            }
+            Response.Write(rst.Count);
         };
+        */
         client.Pictures_Filters_GetListAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS);
+        EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
+        
+        client.Pictures_Filters_ApplyFilterCompleted += (object sdr, Pictures_Filters_ApplyFilterCompletedEventArgs evt) =>
+        {
+            if (evt.Cancelled)
+            {
+                return;
+            }
+            newID = int.Parse(evt.Result);
+            wh.Set();
+        };
+    
+        client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, photoID.ToString(), "Scalar Factor", resize.ToString(), "0");
+        if (contrast > 0)
+        {
+            wh.WaitOne();
+            client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, newID.ToString(), "Contrast", contrast.ToString(), "1");
+        }
+        if (brightness > 0)
+        {
+            wh.WaitOne();
+            client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, newID.ToString(), "Brightness", brightness.ToString(), "1");
+        }
     }
     protected Picture GetPhoto(int photo_id) 
     {
