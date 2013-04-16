@@ -35,3 +35,11 @@ function initialize() {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
+$(document).ready(function () {
+    $('h1.start').hover(function () { //mouse in
+        $(this).animate({ paddingLeft: '20px' }, 400);
+    }, function () { //mouse out
+        $(this).animate({ paddingLeft: 0 }, 400);
+    });
+});
