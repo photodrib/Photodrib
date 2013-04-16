@@ -133,8 +133,7 @@
                         </div>
                     </td>
                     <td>
-                        <img id="test123" src="" runat="server" />
-                            <img id="picture" src="./img/AngryBirds.jpg" runat="server" />
+                            <img id="picture" src="" runat="server" />
                        
                     </td>
                         
