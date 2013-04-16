@@ -67,8 +67,19 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
         {
             return;
         }
-        int userID;
+        int userID = -1;
         BuddyServiceClient client = new BuddyServiceClient();
+        EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
+        client.UserAccount_Profile_GetUserIDFromUserTokenCompleted += (object sdr, UserAccount_Profile_GetUserIDFromUserTokenCompletedEventArgs evt) =>
+        {
+            if (evt.Cancelled)
+            {
+                wh.Set();
+                return;
+            }
+            userID = int.Parse(evt.Result);
+            wh.Set();
+        };
         client.Pictures_PhotoAlbum_GetListCompleted += (object sdr, Pictures_PhotoAlbum_GetListCompletedEventArgs evt) =>
         {
             if (evt.Cancelled)
@@ -95,6 +106,8 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
                 AlbumTable.Rows.Add(row);
             }
         };
-        client.Pictures_PhotoAlbum_GetListAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, );
+        //client.UserAccount_Profile_GetUserIDFromUserTokenAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, "");
+        //while (userID == -1) ;
+        client.Pictures_PhotoAlbum_GetListAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, userID.ToString());
     }
 }

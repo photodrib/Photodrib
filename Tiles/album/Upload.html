@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Photodrib" />
+    <meta name="author" content="Han Zuohao, Wang Yuxi, Wu Pangbo, Zhang Sheng" />
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
+    <script src="../../js/jquery-1.7.2.min.js"></script>
+    <script src="../../js/jquery.url.js"></script>
+    <script src="../../js/jquery-ui-1.8.21.custom.min.js"></script>
+    <script src="../../js/Knockout-2.1.0.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD4AmOld0gvXFP_LjlCibt75nf3cRZ9GEc&sensor=false"></script>
+    <script type="text/javascript" src="Upload.js"></script>
+    <title>Photodrib</title>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/Photodrib.css">
+    <link rel="stylesheet" href="upload.css" type="text/css" />
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="body" class="unselectable">
+        <div class="metro appnavbar" style="margin-top: 50px; margin-right: 5px;"><ul><li>
+            <h1 class="start">Upload Photo</h1>
+        </li></ul></div>
+        <div id="dropbox" class="block">Drop files here...</div>
+        <div class="block"><progress id="progressBar">Upload Progress</progress></div>
+        <div id="message" class="block2"></div>
+        <form>
+            <input id="address" type="text">
+            <input type="button" value="submit" onclick="codeAddress()">
+        </form>
+        <div id="map_canvas" style="height:90%;top:30px"></div> 
+    </div>
+</body>
+</html>

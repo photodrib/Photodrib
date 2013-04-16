@@ -1,0 +1,41 @@
+﻿body {
+    font-family: 'Segoe UI', sans-serif
+}
+
+span {
+    font-style: italic
+}
+
+.block {
+    width: 800px;
+    margin: auto;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.block2 {
+    width: 800px;
+    margin: auto;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+}
+
+#dropbox {
+    margin-top: 200px;
+    text-align: center;
+    line-height: 100px;
+    border: solid 1px;
+    cursor: default;
+}
+
+#progressBar {
+    width: 100%;
+}
+
+#message p {
+    width: 100%;
+    padding: 3px 10px 5px 10px;
+    color: #fff;
+}
