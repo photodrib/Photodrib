@@ -2,7 +2,7 @@
 
 function initialize() {
     var id = $.url.param('id');
-
+    alert(id);
     $.getJSON('GetPhoto.aspx?id=' + id, function (data) {
         alert(data.FullUrl);
         picture.src = data.FullUrl;
@@ -11,3 +11,4 @@ function initialize() {
     });
 }
 
+window.onload = initialize;
