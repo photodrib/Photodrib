@@ -18,6 +18,7 @@ public partial class Edit : System.Web.UI.Page
     int photoID;
     protected void Page_Load(object sender, EventArgs e)
     {
+       
         buddyUser = Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null)
         {
@@ -37,15 +38,10 @@ public partial class Edit : System.Web.UI.Page
             picture.Src = "./img/AngryBirds.jpg";
             return;
         }
-        try
-        {
-            var task = buddyUser.GetPicture(photoID);
-        }
-        catch (Exception)
-        {
-
-            Response.Write(photoID);
-        }
+        var task = buddyUser.GetPicture(photoID);
+        
+        Response.Write(photoID);
+           
         task.Wait();
         if (task.IsCanceled || task.IsFaulted)
         {
