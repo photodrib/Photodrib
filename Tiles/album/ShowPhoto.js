@@ -8,14 +8,21 @@ function init() {
     xhr.onreadystatechange = function () {
         if (xhr1.readyState == 4) {
             var result = JSON.parse(xhr.responseText);
+            var latitude = result['Latitude'];
+            var longitude = result['Longitude'];
+            var comment = result['Comment'];
+            var imgSrc = result['FullUrl'];
+            var img = document.getElementById('BigImage');
+            img.src = imgSrc;
         }
     }
 }
 
-var myCenter = new google.maps.LatLng(51.508742, -0.120850);
+var myCenter = new google.maps.LatLng(latitude, longitude);
 var marker;
 
 function initialize() {
+
     var mapProp = {
         center: myCenter,
         zoom: 5,
@@ -30,6 +37,7 @@ function initialize() {
     });
 
     marker.setMap(map);
+    init();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
