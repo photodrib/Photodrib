@@ -9,16 +9,17 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" /> 
 	<script src="../../js/jquery-1.7.2.min.js"></script>
 	<script src="../../js/jquery.url.js"></script>
-    <script src="../../js/jquery-ui-1.8.21.custom.min.js"></script>
-    <script src="../../js/Knockout-2.1.0.js"></script>
+	<script src="../../js/jquery-ui-1.8.21.custom.min.js"></script>
+	<script src="../../js/Knockout-2.1.0.js"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD4AmOld0gvXFP_LjlCibt75nf3cRZ9GEc&sensor=false"></script>
-    <script src="ShowPhoto.js"></script>
+	<script src="ShowPhoto.js"></script>
 	<title>Photodrib</title>
 
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 
 	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../../css/Photodrib.css">
+	<link rel="stylesheet" type="text/css" href="ShowPhoto.css">
 	
 	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
@@ -26,34 +27,43 @@
 	<![endif]-->
 	
 </head>
-<body onunload="GUnload()">
+    <body onunload="GUnload()">
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/zh_CN/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 	
-    <div id="body" class="unselectable">
+	<div id="body" class="unselectable">
 
 
-        <div class="metro appnavbar" style="margin-top: 50px; margin-right: 5px;">
+		<div class="metro appnavbar" style="margin-top: 50px; margin-right: 5px;">
 			<ul>
-                <li>
-				    <a class="backbutton" href="javascript:closeApp()">
-				    <img src="../../img/Metro-Back-48.png" alt="Go back to Dashboard">
-				    </a>
-                </li>
-                <li>
-				    <h1 class="start">View Photo</h1>
-                </li>
+				<li>
+					<a class="backbutton" href="javascript:closeApp()">
+					<img src="../../img/Metro-Back-48.png" alt="Go back to Dashboard">
+					</a>
+				</li>
+				<li>
+					<h1 class="start">View Photo</h1>
+				</li>
 				
 			</ul>
 		</div>
-		<div style="height: 600px; width: 800px; margin-top: 200px;">
-            <img src="../../001.JPG" data-bind="attr: {src: photo}" style="border-color:#FFA500;border-style:solid"  />
-        </div>
-		<div id="googleMap" style="width: 500px; height: 380px;"></div>
+		<div id="imgContainer">
+			<img id="bigImage" />
+		</div>
+		<div id="googleMap"></div>
+        <div class="fb-comments" data-href="http://www.photodrib.com" data-width="470" data-num-posts="10"></div>
 		
-    </div>
+	</div>
 
 
 </body>
-    
+	
 
 	
 </html>
