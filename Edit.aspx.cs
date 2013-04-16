@@ -21,33 +21,9 @@ public partial class Edit : System.Web.UI.Page
     {
        
         buddyUser = Session["buddyUser"] as AuthenticatedUser;
-        if (buddyUser == null)
-        {
-            Response.Write("null");
-            return;
-        }
-        try
-        {
-            photoID = int.Parse(Request["id"]);
-        }
-        catch (Exception)
-        {
-            picture.Src = "./img/AngryBirds.jpg";
-            return;
-        }
-        var task = buddyUser.GetPicture(photoID);
         
-        Response.Write(photoID);
-           
-        task.Wait();
-        if (task.IsCanceled || task.IsFaulted)
-        {
-            picture.Src = "./img/AngryBirds.jpg";
-        }
-        else
-        {
-            picture.Src = task.Result.FullUrl;
-        }
+        photoID = int.Parse(Request["id"]);
+       
     }
 
     private bool IsCombinedJSOlder(string path)

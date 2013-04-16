@@ -18,7 +18,7 @@
 <% } else { %>    
     <script type="text/javascript" src="js/CombinedDashboard.js?v=14"></script>
 <% } %>
-
+    <script src="Edit.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             <%= GetAlerts() %>
