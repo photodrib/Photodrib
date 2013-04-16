@@ -57,10 +57,18 @@ public partial class Edit : System.Web.UI.Page
     protected void EditButton_Click(object sender, EventArgs e) 
     {  
         int contrast, brightness, newID = -1;
+        int photoID;
         float resize;
+        int key=0;
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
-
-        int photoID = int.Parse(Request["id"]);
+        try
+        {
+            photoID = int.Parse(Request["id"]);
+        }
+        catch (Exception)
+        {
+            return;
+        }
         try
         {
             resize = float.Parse(Request["resize"])/100;
@@ -133,17 +141,25 @@ public partial class Edit : System.Web.UI.Page
             newID = int.Parse(evt.Result);
             wh.Set();
         };
-    
-        client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, photoID.ToString(), "Scalar Factor", resize.ToString(), "0");
+        if (resize > 0)
+        {
+            client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, photoID.ToString(), "Scalar Factor", resize.ToString(), key.ToString());
+            key = 1;
+        }
+        else
+        {
+            newID = photoID;
+        }
         if (contrast > 0)
         {
             wh.WaitOne();
-            client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, newID.ToString(), "Contrast", contrast.ToString(), "1");
+            client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, newID.ToString(), "Contrast", contrast.ToString(), key.ToString());
+            key = 1;
         }
         if (brightness > 0)
         {
             wh.WaitOne();
-            client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, newID.ToString(), "Brightness", brightness.ToString(), "1");
+            client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, newID.ToString(), "Brightness", brightness.ToString(), key.ToString());
         }
     }
 
