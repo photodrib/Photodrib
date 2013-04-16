@@ -20,8 +20,13 @@
                     <h1><a class="brand" href="Default.aspx">Photodrib</a></h1>
                     <div class="nav-collapse">
                         <ul class="nav">
-                            <li><a class="active" href="Default.aspx"><i class="icon-th-large"></i>Dashboard</a></li>                        
-                        </ul>                        
+                            <li><a class="active" href="Default.aspx"><i class="icon-th-large"></i>Home</a></li>
+                            <li>
+                                <form id="googleForm" class="navbar-search pull-left" action="AppStore.aspx">
+                                    <input id="googleSearchText" type="text" class="search-query span2" name="q" placeholder="Search User">
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

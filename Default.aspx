@@ -38,11 +38,11 @@
                     <h1><a class="brand" href="?">Photodrib</a></h1>
                     <div class="nav-collapse">
                         <ul class="nav">
-                            <li><a class="active" href="?"><i class="icon-th-large"></i>Dashboard</a></li>
-                            <li><a href="AppStore.aspx"><i class="icon-shopping-cart"></i>Apps</a></li>
+                            <li><a class="active" href="?"><i class="icon-th-large"></i>Home</a></li>
+                            <li><a href="AppStore.aspx"><i class="icon-shopping-cart"></i>Albums</a></li>
                             <li>
-                                <form id="googleForm" class="navbar-search pull-left" action="http://www.google.com/search" target="_blank">
-                                    <input id="googleSearchText" type="text" class="search-query span2" name="q" placeholder="Google">
+                                <form id="googleForm" class="navbar-search pull-left" action="AppStore.aspx">
+                                    <input id="googleSearchText" type="text" class="search-query span2" name="q" placeholder="Search User">
                                 </form>
                             </li>
                         </ul>
