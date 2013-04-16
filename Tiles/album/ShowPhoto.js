@@ -29,6 +29,8 @@ function initialize() {
         });
 
         marker.setMap(map);
+
+        comment.style.visibility = 'visible';
     });
 }
 
