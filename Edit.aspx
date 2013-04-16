@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="Edit.aspx.cs" Inherits="Edit" MasterPageFile="~/Photodrib.master" %>
+<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="Edit.aspx.cs" Inherits="Edit" MasterPageFile="~/Photodrib.master" Async="true" %>
 <%@ OutputCache NoStore="true" Location="None"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="scripts" runat="server">
@@ -66,7 +66,7 @@
         </div>
 
         <div id="content" style="visibility: hidden">
-            <div id="start" data-bind="text: photo_editor">Photo Editor </div>
+            <div id="start" ">Photo Editor </div>
             <div id="user" data-bind="with: user" onclick="ui.settings()">
                 <div id="name">
                     <div id="firstname" data-bind="text: firstName">Omar</div>
@@ -94,10 +94,12 @@
             <br /><br /><br /><br /><br /><br /><br />
             
         <div class="container metro">
+            <form id="container"  runat="server">
             <table id="PhotoEdit">
+                
                 <tr>
                     <td>
-                        <form id="EditForm" class="metro-form"  runat="server">
+                        <div class="metro-form">
                             <div class="metro-form-control" style="width: 300px">
                                 <label>Contrast</label>
                                 <div class="metro-text-box">
@@ -113,40 +115,34 @@
                                     <span class="helper"></span>
                                 </div>
                             </div>
-                                  
+
                             <div class="metro-form-control" style="width: 300px">
-                                <label>Length</label>
+                                <label>Resize</label>
                                 <div class="metro-text-box">
-                                    <input name="length" type="number" min="1" max="100" />
+                                    <input name="resize" type="number" min="0" max="10" />
                                     <span class="helper"></span>
                                 </div>
                             </div>
-
-                            <div class="metro-form-control" style="width: 300px">
-                                <label>Width</label>
-                                <div class="metro-text-box">
-                                    <input name="width" type="number" min="1" max="100" />
-                                    <span class="helper"></span>
-                                </div>
-                            </div>
-
+                        
 
 
                             <br /><br /><br />
                             <asp:Button ID="EditButton" OnClick="EditButton_Click" runat="server" CssClass="metro-button" Text="Edit" />
                                    
                             <input type="reset" ID="ClearButton" class="metro-button" value="Clear" />
-                        </form>
-
-
+                        </div>
                     </td>
                     <td>
-                            <img src="./img/AngryBirds.jpg"/>
+                        <img id="test123" src="" runat="server" />
+                            <img id="picture" src="./img/AngryBirds.jpg" runat="server" />
+                       
                     </td>
-                </tr>                    
-            </table>
+                        
+                </tr>   
+                            
+            </table></form> 
         </div>
         
-    </div>
+    </div> 
 </asp:Content>
 
