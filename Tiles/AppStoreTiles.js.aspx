@@ -2,7 +2,17 @@
 /// <reference path="../js/jquery-1.7.2.min.js" />
 
 // Definition of the tiles, their default values.
-window.TileBuilders = {};
+window.TileBuilders = {
+    recentUpdates: function (uniqueId) {
+        return {
+            uniqueId: uniqueId,
+            name: 'RecentUpdates',
+            size: 'tile-double tile-double-vertical',
+            label: 'Recent Updates',
+            tileImage: null
+        };
+    }
+};
 
 // The default tile setup offered to new users.
 window.AppStoreTiles = [
@@ -12,7 +22,10 @@ window.AppStoreTiles = [
     },
     {
         name: "Recent Updates",
-        tiles: []
+        tiles: [{
+            id: 'RecentUpdates',
+            name: 'RecentUpdates'
+        }]
     }
 ];
 
@@ -52,6 +65,25 @@ if (uid != null) {
                     name: tile
                 });
             });
+        }
+    });
+
+    $.ajax('Tiles/album/GetRecentUpdatesInfo.ashx', {
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            window.TileBuilders.RecentUpdates = function () {
+                var tileImage = data.PhotoAlbumThumbnail;
+                return function (uniqueId) {
+                    return {
+                        uniqueId: uniqueId,
+                        name: 'RecentUpdates',
+                        size: 'tile-double tile-double-vertical',
+                        label: 'Recent Updates',
+                        tileImage: tileImage
+                    };
+                };
+            }();
         }
     });
 }

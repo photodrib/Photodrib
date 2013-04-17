@@ -1,8 +1,10 @@
 ﻿<%@ WebHandler Language="C#" Class="UploadPhoto" %>
 
 using Buddy;
+using Buddy.BuddyService;
 using System;
 using System.IO;
+using System.Threading;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.SessionState;
@@ -79,7 +81,14 @@ public class UploadPhoto : IHttpHandler, IRequiresSessionState {
             context.Response.Write("null");
             return;
         }
-        context.Response.Write(Json.Encode(upload.Result));
+        Picture pic = upload.Result;
+        BuddyServiceClient client = new BuddyServiceClient();
+        string s = "";
+        EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
+        client.Pictures_VirtualAlbum_AddPhotoCompleted += (object sender, Pictures_VirtualAlbum_AddPhotoCompletedEventArgs evt) => { s = evt.Result; wh.Set(); };
+        client.Pictures_VirtualAlbum_AddPhotoAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, BuddyApplication.SUPERTOKEN, BuddyApplication.RUID.ToString(), pic.PhotoID.ToString(), null);
+        wh.WaitOne();
+        context.Response.Write(Json.Encode(upload.Result) + s);
     }
  
     public bool IsReusable {

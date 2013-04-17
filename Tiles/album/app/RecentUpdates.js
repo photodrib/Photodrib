@@ -2,7 +2,6 @@
 /// <reference path="../../../js/jquery.url.js" />
 /// <reference path="../../../js/AppCommon.js" />
 
-var albumID;
 var uid;
 
 $(document).ready(function () {
@@ -12,25 +11,15 @@ $(document).ready(function () {
         $(this).animate({ paddingLeft: 0 }, 400);
     });
 
-    albumID = parseInt($.url.param('aid'));
-    uid = parseInt($.url.param('uid'));
-    var url = '../GetAlbum.ashx?uid=' + uid + '&aid=' + albumID;
-
-    $.getJSON('../../../ServerStuff/GetUserID.ashx', function (currUid) {
-        if (uid == currUid) {
-            $('a.delbutton')[0].style.visibility = 'visible';
+    $.ajax('ServerStuff/GetUserID.ashx', {
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            uid = data;
         }
     });
 
-    $.getJSON('../GetAlbumList.ashx?id=' + uid, function (data) {
-        $.each(data, function (i, item) {
-            if (item.AlbumID == albumID) {
-                $('h1.start')[0].innerText = item.PhotoAlbumName;
-            }
-        });
-    });
-
-    $.getJSON(url, function (data) {
+    $.getJSON('GetRecentUpdates.ashx', function (data) {
         var ctr = 0;
 
         var htmlString = "<table><tr>";
@@ -66,15 +55,3 @@ $(document).ready(function () {
         });
     });
 });
-
-function delAlbum() {
-    if (!window.confirm('Are you sure to delete this album?')) return;
-    $.getJSON('../DeleteAlbum.ashx?id=' + albumID, function (data) {
-        if (!data) {
-            alert('Failed');
-        } else {
-            alert('Album deleted');
-            closeApp();
-        }
-    });
-}

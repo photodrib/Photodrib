@@ -47,11 +47,6 @@ function init() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
-    $('h1.start').hover(function () { //mouse in
-        $(this).animate({ paddingLeft: '20px' }, 400);
-    }, function () { //mouse out
-        $(this).animate({ paddingLeft: 0 }, 400);
-    });
 }
 
 function codeAddress() {
