@@ -50,8 +50,6 @@ var ui = {
     appStore_splash_icon: 'img/App Store alt.png',
     createAlbum_splash_color: 'bg-color-red',
     createAlbum_splash_icon: 'img/newalbum.png',
-    manageAlbums_splash_color: 'bg-color-yellow',
-    manageAlbums_splash_icon: 'img/manage.png',
     anon_first_name: 'John',
     anon_last_name: 'Anonymous',
     anon_photo: 'img/User No-Frame.png',
@@ -582,14 +580,6 @@ var ui = {
     createAlbum: function () {
         ui.splashScreen(ui.createAlbum_splash_color, ui.createAlbum_splash_icon, function (div) {
             ui.launchApp("CreateAlbum", "Create Album", "ServerStuff/CreateAlbum.aspx", function () {
-                div.fadeOut();
-            });
-        });
-    },
-
-    manageAlbum: function () {
-        ui.splashScreen(ui.manageAlbums_splash_color, ui.manageAlbums_splash_icon, function (div) {
-            ui.launchApp("ManageAlbums", "Manage Albums", "ServerStuff/ManageAlbums.html", function () {
                 div.fadeOut();
             });
         });

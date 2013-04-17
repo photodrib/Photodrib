@@ -493,7 +493,9 @@ var ui = {
     settings_splash_color: 'bg-color-purple',
     settings_splash_icon: 'img/configure.png',
     appStore_splash_color: 'bg-color-blue',
-    appStore_splash_icon: 'img/App Store.png',
+    appStore_splash_icon: 'img/App Store alt.png',
+    createAlbum_splash_color: 'bg-color-red',
+    createAlbum_splash_icon: 'img/newalbum.png',
     anon_first_name: 'John',
     anon_last_name: 'Anonymous',
     anon_photo: 'img/User No-Frame.png',
@@ -1015,7 +1017,15 @@ var ui = {
 
     apps: function () {
         ui.splashScreen(ui.appStore_splash_color, ui.appStore_splash_icon, function (div) {
-            ui.launchApp("AppStore", "App Store", "AppStore.html", function () {
+            ui.launchApp("AppStore", "App Store", "AppStore.aspx", function () {
+                div.fadeOut();
+            });
+        });
+    },
+
+    createAlbum: function () {
+        ui.splashScreen(ui.createAlbum_splash_color, ui.createAlbum_splash_icon, function (div) {
+            ui.launchApp("CreateAlbum", "Create Album", "ServerStuff/CreateAlbum.aspx", function () {
                 div.fadeOut();
             });
         });
