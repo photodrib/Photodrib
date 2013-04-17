@@ -1,5 +1,10 @@
-﻿/// <reference path="../../js/jquery-1.7.2.min.js" />
-/// <reference path="../../js/jquery.url.js" />
+﻿/// <reference path="fancybox/lib/jquery-1.9.0.min.js" />
+/// <reference path="fancybox/lib/jquery.mousewheel-3.0.6.pack.js" />
+/// <reference path="fancybox/source/jquery.fancybox.js" />
+/// <reference path="fancybox/source/helpers/jquery.fancybox-buttons.js" />
+/// <reference path="fancybox/source/helpers/jquery.fancybox-thumbs.js" />
+/// <reference path="fancybox/source/helpers/jquery.fancybox-media.js" />
+/// <reference path="http://maps.googleapis.com/maps/api/js?key=AIzaSyD4AmOld0gvXFP_LjlCibt75nf3cRZ9GEc&sensor=false" />
 
 
 function initialize() {
@@ -7,9 +12,11 @@ function initialize() {
     var pid = $.url.param('pid');
 
     $.getJSON('GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
-        bigImage.src = data.FullPhotoURL;
-        bigImage.title = bigImage.alt = data.PhotoComment;
-        bigImage.style.visibility = 'visible';
+        var src = data.FullPhotoURL;
+        var title = data.PhotoComment;
+        $('h1.start')[0].innerText = data.PhotoComment;
+        var fbox = '<a class="fancybox" href="' + src + '" title="' + title + '"><img src="'
+                + src + '" alt="' + title + '" width="' + 300 + '" /></a>'
 
         var myCenter = new google.maps.LatLng(data.Latitude, data.Longitude);
         var marker;
@@ -22,12 +29,22 @@ function initialize() {
 
         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-        marker = new google.maps.Marker({
-            position: myCenter,
-            animation: google.maps.Animation.BOUNCE
+        var infoWindow = new google.maps.InfoWindow({
+            content: fbox
         });
 
-        marker.setMap(map);
+        marker = new google.maps.Marker({
+            position: myCenter,
+            map: map,
+            animation: google.maps.Animation.BOUNCE,
+            title: data.PhotoComment
+        });
+
+        google.maps.event.addListener(marker, 'click', function () {
+            infoWindow.open(map, marker);
+        });
+
+        infoWindow.open(map, marker);
 
         comment.style.visibility = 'visible';
     });
@@ -64,5 +81,23 @@ $(document).ready(function () {
     }, function () { //mouse out
         $(this).animate({ paddingLeft: 0 }, 400);
     });
+    $('.fancybox').fancybox({
+        padding: 0,
+
+        openEffect: 'elastic',
+        openSpeed: 150,
+
+        closeEffect: 'elastic',
+        closeSpeed: 150,
+
+        closeClick: true,
+
+        helpers: {
+            overlay: null
+        }
+    });
+    document.body.onresize = function () {
+        comment.setAttribute("data-width", innerWidth * 0.8);
+    }
 });
 

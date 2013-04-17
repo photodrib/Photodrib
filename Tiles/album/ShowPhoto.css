@@ -10,9 +10,15 @@
     visibility: hidden;
 }
 
+div.center {
+    width: 80%;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #googleMap {
-    width: 500px;
-    height: 380px;
+    height: 500px;
 }
 
 .fb-comments {
