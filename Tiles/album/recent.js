@@ -10,6 +10,7 @@ function album_load(tile, div) {
     $.getJSON('Tiles/album/GetRecentUpdates.ashx', function (data) {
         var ctr = 0;
         $.each(data.reverse(), function (i, item) {
+            if (i >= 20) return;
             var sourceSquare = item.ThumbnailPhotoURL;
             var sourceOrig = item.FullPhotoURL;
             var comment = item.PhotoComment;

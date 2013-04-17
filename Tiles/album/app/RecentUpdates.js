@@ -25,6 +25,7 @@ $(document).ready(function () {
         var htmlString = "<table><tr>";
 
         $.each(data.reverse(), function (i, item) {
+            if (i >= 20) return;
             //if (item.tags.length < 150) {
             var sourceSquare = item.ThumbnailPhotoURL;
             var sourceOrig = item.FullPhotoURL;
