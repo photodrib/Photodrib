@@ -98,7 +98,7 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
                     cells[i] = new HtmlTableCell();
                 }
                 cells[0].InnerHtml = "<input type=\"checkbox\" name=\"del\" value=\"" + album.AlbumID + "\" />";
-                cells[1].InnerText = album.PhotoAlbumName;
+                cells[1].InnerHtml = "<a href=\"../Tiles/album/app/AlbumApp.html?aid=" + album.AlbumID + "&uid=" + userID + "\">" + album.PhotoAlbumName + "</a>";
                 cells[2].InnerText = album.PhotoCount;
                 row = new HtmlTableRow();
                 foreach (HtmlTableCell cell in cells)
