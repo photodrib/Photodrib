@@ -3,7 +3,7 @@
 
 <asp:Content ContentPlaceHolderID="scripts" runat="server">
     <!-- Copyright 2012 Omar AL Zabir -->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>    
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     
 <% if (Request.IsLocal) { %>    
     <!-- 
@@ -11,12 +11,12 @@
         file in the /js folder to generate the CombinedDashboard.js file again. And then don't
         forget to update the ?v=14#. Otherwise user's will have cached copies in their browser
         and won't get the newly deployed file. -->
-    <script type="text/javascript" src="js/TheCore.js?v=14"></script>
-    <script type="text/javascript" src="tiles/tiles.js?v=14"></script>
-    <script type="text/javascript" src="js/Dashboard.js?v=14"></script>
+    <script type="text/javascript" src="js/TheCore.js?v=15"></script>
+    <script type="text/javascript" src="tiles/tiles.js?v=15"></script>
+    <script type="text/javascript" src="js/Dashboard.js?v=15"></script>
     
 <% } else { %>    
-    <script type="text/javascript" src="js/CombinedDashboard.js?v=14"></script>
+    <script type="text/javascript" src="js/CombinedDashboard.js?v=15"></script>
 <% } %>
 
     <script type="text/javascript">

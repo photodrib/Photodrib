@@ -4,9 +4,9 @@
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="scripts">
     <!-- Copyright 2012 Omar AL Zabir -->
-    <script type="text/javascript" src="js/TheCore.js?v=14"></script>
-    <script type="text/javascript" src="Tiles/AppStoreTiles.js?v=14"></script>
-    <script type="text/javascript" src="js/AppStore.js?v=14"></script>       
+    <script type="text/javascript" src="js/TheCore.js?v=15"></script>
+    <script type="text/javascript" src="Tiles/AppStoreTiles.js?v=15"></script>
+    <script type="text/javascript" src="js/AppStore.js?v=15"></script>       
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="body">
