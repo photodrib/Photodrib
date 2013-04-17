@@ -42,6 +42,7 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
+        
         if (buddyUser == null)
         {
             return;
@@ -54,25 +55,23 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
             try
             {
                 albumID = int.Parse(s);
+                Response.Write(albumID);
+                Response.Write("\n");
             }
             catch (Exception)
             {
                 continue;
             }
-            var getAlbum = buddyUser.PhotoAlbums.Get(albumID);
-            getAlbum.Wait();
-            if (getAlbum.IsCanceled || getAlbum.IsFaulted)
+            BuddyServiceClient client = new BuddyServiceClient();
+            EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
+            client.Pictures_PhotoAlbum_DeleteCompleted += (object sdr, Pictures_PhotoAlbum_DeleteCompletedEventArgs evt) =>
             {
-                continue;
-            }
-            PhotoAlbum album = getAlbum.Result;
+                wh.Set();
+            };
+            
+            client.Pictures_PhotoAlbum_DeleteAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, albumID.ToString());
+            wh.WaitOne();
 
-            var delete = album.Delete();
-            delete.Wait();
-            if (delete.IsCanceled || delete.IsFaulted)
-            {
-                continue;
-            }
         }
         Response.Redirect("ManageAlbum.aspx", true);
     }
