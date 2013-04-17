@@ -1,5 +1,9 @@
 ﻿/// <reference path="../../../js/jquery-1.7.2.min.js" />
 /// <reference path="../../../js/jquery.url.js" />
+/// <reference path="../../../js/AppCommon.js" />
+
+var albumID;
+var uid;
 
 $(document).ready(function () {
     $('a.backbutton').hover(function () { //mouse in
@@ -8,9 +12,17 @@ $(document).ready(function () {
         $(this).animate({ paddingLeft: 0 }, 400);
     });
 
-    var albumID = parseInt($.url.param('aid'));
-    var uid = parseInt($.url.param('uid'));
+    albumID = parseInt($.url.param('aid'));
+    uid = parseInt($.url.param('uid'));
     var url = '../GetAlbum.ashx?uid=' + uid + '&aid=' + albumID;
+
+    //$('h1.start')[0].innerText = window.TileBuilders['a' + albumID].PhotoAlbumName;
+
+    $.getJSON('../../../ServerStuff/GetUserID.ashx', function (currUid) {
+        if (uid == currUid) {
+            $('a.delbutton')[0].style.visibility = 'visible';
+        }
+    });
 
     $.getJSON(url, function (data) {
         var ctr = 0;
@@ -50,3 +62,15 @@ $(document).ready(function () {
         });
     });
 });
+
+function delAlbum() {
+    if (!window.confirm('Are you sure to delete this album?')) return;
+    $.getJSON('../DeleteAlbum.ashx?id=' + albumID, function (data) {
+        if (!data) {
+            alert('Failed');
+        } else {
+            alert('Album deleted');
+            closeApp();
+        }
+    });
+}

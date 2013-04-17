@@ -79,7 +79,7 @@ $(document).ready(function () {
             div.click(function () {
                 if (div.toggleClass("selected").hasClass("selected")) {
                     div.tooltip({
-                        title: 'The app is added. Go back to Dashboard',
+                        title: 'The album is added. Go back to Home',
                         trigger: 'manual',
                         location: 'top'
                     });

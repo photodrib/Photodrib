@@ -461,9 +461,14 @@ body {
         display: block;
         float: left;
     }
-
+    
     .appnavbar .backbutton {
-        margin-right: 20px;    
+        margin-right: 20px;
+    }
+
+    .appnavbar .delbutton {
+        margin-left: 20px;
+        visibility: hidden;
     }
 
 .appnavbar_space {

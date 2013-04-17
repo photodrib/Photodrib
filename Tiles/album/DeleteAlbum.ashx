@@ -37,6 +37,11 @@ public class DeleteAlbum : IHttpHandler, IRequiresSessionState {
             return;
         }
         PhotoAlbum album = getAlbum.Result;
+        if (album == null)
+        {
+            context.Response.Write("null");
+            return;
+        }
 
         var delete = album.Delete();
         delete.Wait();
