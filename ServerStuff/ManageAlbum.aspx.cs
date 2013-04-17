@@ -48,7 +48,7 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
         }
         string[] del = Request["del"].Split(',');
         Hashtable albums = new Hashtable();
-        foreach (string s in del)
+        /*foreach (string s in del)
         {
             int albumID;
             try
@@ -73,7 +73,8 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
             {
                 continue;
             }
-        }
+        }*/
+        Response.Write("i am here!");
         Response.Redirect("ManageAlbum.aspx", true);
     }
 
