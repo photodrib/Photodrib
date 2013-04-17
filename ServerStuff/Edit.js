@@ -12,7 +12,7 @@ function initialize() {
             uid = data;
         }
     });
-
+    var picture = document.getElementById('picture');
     $.getJSON('../Tiles/album/GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
         picture.src = data.FullPhotoURL;
         picture.title = picture.alt = data.PhotoComment;

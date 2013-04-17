@@ -3,8 +3,9 @@
 using System;
 using System.Web;
 using System.Collections.Generic;
+using System.Web.SessionState;
 
-public class Logout : IHttpHandler {
+public class Logout : IHttpHandler, IRequiresSessionState {
     
     public void ProcessRequest (HttpContext context) {
         List<string> cookiesToClear = new List<string>();

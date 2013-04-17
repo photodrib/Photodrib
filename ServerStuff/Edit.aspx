@@ -4,67 +4,8 @@
     Edit Photo
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
-    <div id="body" class="unselectable">
-        <div id="navbar" class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a class="pull-left" style="margin-top: 7px; margin-right: 5px;" href="">
-                        <img src="img/avatar474_2.gif" style="max-height: 16px;" />
-                    </a>
-                    <h1><a class="brand" href="?">Photodrib</a></h1>
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                            <li><a class="active" href="?"><i class="icon-th-large"></i>Dashboard</a></li>
-                            <li><a href="AppStore.aspx"><i class="icon-shopping-cart"></i>Apps</a></li>
-                            <li>
-                                <form id="googleForm" class="navbar-search pull-left" action="http://www.google.com/search" target="_blank">
-                                    <input id="googleSearchText" type="text" class="search-query span2" name="q" placeholder="Google">
-                                </form>
-                            </li>
-                        </ul>
-                        <ul class="nav pull-right">
-                            <%--<li><a href="javascript:fullscreen()"><i class="icon-facetime-video"></i>Go Fullscreen</a></li>--%>
-                            <li><a href="ServerStuff/Logout.ashx"><i class="icon-refresh"></i>Reset</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-tint"></i>Theme<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" onclick="ui.switchTheme('theme-green')">Green</a></li>
-                                    <li><a href="#" onclick="ui.switchTheme('theme-white')">White</a></li>
-                                    <li><a href="#" onclick="ui.switchTheme('theme-Bloom')">Bloom</a></li>                                    
-                                </ul>
-                            </li>                            
-                            <li data-bind="if: user().isAnonymous"><a onclick="ui.login()" href="#login"><i class="icon-user"></i>Login</a></li>
-                            <li data-bind="if: !user().isAnonymous"><a href="ServerStuff/Logout.ashx"><i class="icon-user"></i>Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div id="content" style="visibility: hidden">
-            <div id="start" ">Photo Editor </div>
-            <div id="user" data-bind="with: user" onclick="ui.settings()">
-                <div id="name">
-                    <div id="firstname" data-bind="text: firstName">Omar</div>
-                    <div id="lastname" data-bind="text: lastName">AL Zabir</div>
-                </div>
-                <div id="photo">
-                    <img src="img/User No-Frame.png" data-bind="attr: {src: photo}" width="40" height="40" />
-                </div>
-            </div>
-            <div id="browser_incompatible" class="alert">
-                <button class="close" data-dismiss="alert">¡Á</button>
-                <strong>Warning!</strong>
-                Your browser is incompatible with Photodrib. Please use Internet Explorer 9+, Chrome, Firefox or Safari.
-            </div>
-            <div id="CombinedScriptAlert" class="alert">
-                <button class="close" data-dismiss="alert">¡Á</button>
-                <strong>Warning!</strong>
-                Combined javascript files are outdated. 
-                Please retun the js\Combine.bat file. 
-                Otherwise it won't work when you will deploy on a server.
-            </div>
-        </div>            
+    <div id="body">
         <br /><br /><br /><br /><br /><br /><br />
         <script type="text/javascript" src="Edit.js"></script>
         <div class="container metro">
