@@ -35,127 +35,74 @@ public partial class Edit : System.Web.UI.Page
                 }
             }
         }
-
-        AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
-        try
-        {
-            int photoID = int.Parse(Request["id"]);
-        }
-        catch (Exception)
-        {
-
-        }
     }
 
     protected void EditButton_Click1(object sender, EventArgs e)
     {
-        int newID = -1;
-        int photoID;
         float contrast;
-        string param="", nextUrl;
-        AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
-        try
-        {
-            photoID = int.Parse(Request["id"]);
-        }
-        catch (Exception)
-        {
-            return;
-        }
-        try
-        {
-            contrast = int.Parse(Request["contrast"]) / 100f;
-            if (contrast > 4)
-            {
-                return;
-            }
-        }
-        catch (Exception)
-        {
-            return;
-        }
-        BuddyServiceClient client = new BuddyServiceClient();
-        EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
+        string param;
 
-        client.Pictures_Filters_ApplyFilterCompleted += (object sdr, Pictures_Filters_ApplyFilterCompletedEventArgs evt) =>
+        try
         {
-            if (evt.Cancelled)
-            {
-                return;
-            }
-            try
-            {
-                newID = int.Parse(evt.Result);
-            }
-            catch (Exception)
-            {
-                return;
-            }
-            nextUrl = "../Tiles/album/ShowPhoto.html?id=" + newID.ToString();
-            Response.Redirect(nextUrl);
-        };
+            contrast = GetArg("contrast");
+        }
+        catch (Exception)
+        {
+            return;
+        }
         param = "Contrast=" + contrast.ToString() + ";";
-        client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, photoID.ToString(), "Color Operations", param, "0");
+        ApplyFilter("Color Operations", param);
     }
+
     protected void EditButton_Click2(object sender, EventArgs e)
     {
-        int newID = -1;
-        int photoID;
-        float brightness; ;
-        string param, nextUrl;
-        AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
-        try
-        {
-            photoID = int.Parse(Request["id"]);
-        }
-        catch (Exception)
-        {
-            return;
-        }
-        try
-        {
-            brightness = float.Parse(Request["contrast"]) / 100;
-            if (brightness > 4)
-            {
-                return;
-            }
-        }
-        catch (Exception)
-        {
-            return;
-        }
-        BuddyServiceClient client = new BuddyServiceClient();
-        EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
+        float brightness;
+        string param;
 
-        client.Pictures_Filters_ApplyFilterCompleted += (object sdr, Pictures_Filters_ApplyFilterCompletedEventArgs evt) =>
+        try
         {
-            if (evt.Cancelled)
-            {
-                return;
-            }
-            try
-            {
-                newID = int.Parse(evt.Result);
-            }
-            catch (Exception)
-            {
-                return;
-            }
-            nextUrl = "../Tiles/album/ShowPhoto.html?id=" + newID.ToString();
-            Response.Redirect(nextUrl);
-        };
+            brightness = GetArg("brightness");
+        }
+        catch (Exception)
+        {
+            return;
+        }
         param = "Brightness=" + brightness.ToString() + ";";
-        client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, photoID.ToString(), "Color Operations", param, "0");
-        
-        
-
+        ApplyFilter("Color Operations", param);
     }
+
     protected void EditButton_Click3(object sender, EventArgs e)
     {
-        int newID = -1;
-        int photoID;
         float resize;
-        string param,nextUrl;
+        string param;
+
+        try
+        {
+            resize = GetArg("resize");
+        }
+        catch (Exception)
+        {
+            return;
+        }
+        param = "Scale Factor=" + resize.ToString() + ";";
+        ApplyFilter("Basic Operations", param);
+    }
+
+    private float GetArg(string reqArg)
+    {
+        float arg;
+        arg = float.Parse(Request[reqArg]) / 100;
+        if (arg > 4)
+        {
+            throw new InvalidDataException();
+        }
+        return arg;
+    }
+
+    private void ApplyFilter(string filterName, string param)
+    {
+        int photoID;
+        string nextUrl;
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
         try
         {
@@ -165,20 +112,7 @@ public partial class Edit : System.Web.UI.Page
         {
             return;
         }
-        try
-        {
-            resize = float.Parse(Request["resize"]) / 100;
-            if (resize > 4)
-            {
-                return;
-            }
-        }
-        catch (Exception)
-        {
-            return;
-        }
         BuddyServiceClient client = new BuddyServiceClient();
-        EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
 
         client.Pictures_Filters_ApplyFilterCompleted += (object sdr, Pictures_Filters_ApplyFilterCompletedEventArgs evt) =>
         {
@@ -186,6 +120,7 @@ public partial class Edit : System.Web.UI.Page
             {
                 return;
             }
+            int newID;
             try
             {
                 newID = int.Parse(evt.Result);
@@ -194,12 +129,9 @@ public partial class Edit : System.Web.UI.Page
             {
                 return;
             }
-            nextUrl = "../Tiles/album/ShowPhoto.html?id=" + newID.ToString();
+            nextUrl = "../Tiles/album/ShowPhoto.html?uid=" + buddyUser.ID + "&pid=" + newID.ToString();
             Response.Redirect(nextUrl);
         };
-        param = "Scale Factor=" + resize.ToString() + ";";
-        client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, photoID.ToString(), "Basic Operations", param, "0");
-        
-        
+        client.Pictures_Filters_ApplyFilterAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, photoID.ToString(), filterName, param, "0");
     }
 }

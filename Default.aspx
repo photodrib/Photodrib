@@ -5,7 +5,7 @@
     <!-- Copyright 2012 Omar AL Zabir -->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     
-<% if (Request.IsLocal) { %>    
+<%// if (Request.IsLocal) { %>    
     <!-- 
         If you change any of the below javascript files, make sure you run the Combine.bat
         file in the /js folder to generate the CombinedDashboard.js file again. And then don't
@@ -15,9 +15,9 @@
     <script type="text/javascript" src="tiles/tiles.js?v=15"></script>
     <script type="text/javascript" src="js/Dashboard.js?v=15"></script>
     
-<% } else { %>    
-    <script type="text/javascript" src="js/CombinedDashboard.js?v=15"></script>
-<% } %>
+<%// } else { %>    
+    <!--script type="text/javascript" src="js/CombinedDashboard.js?v=15"></!--script-->
+<%// } %>
 
     <script type="text/javascript">
         $(document).ready(function(){
