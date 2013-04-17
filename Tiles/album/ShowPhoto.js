@@ -21,8 +21,8 @@ function initialize() {
     });
     if (!currUid) return;
     if (uid == currUid) {
-        $('a.delbutton')[0].style.visibility = 'visible';
         $('a.editbutton')[0].style.visibility = 'visible';
+        $('a.delbutton')[0].style.visibility = 'visible';
     }
 
     $.getJSON('GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
