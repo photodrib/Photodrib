@@ -83,12 +83,11 @@ public class UploadPhoto : IHttpHandler, IRequiresSessionState {
         }
         Picture pic = upload.Result;
         BuddyServiceClient client = new BuddyServiceClient();
-        string s = "";
         EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
-        client.Pictures_VirtualAlbum_AddPhotoCompleted += (object sender, Pictures_VirtualAlbum_AddPhotoCompletedEventArgs evt) => { s = evt.Result; wh.Set(); };
+        client.Pictures_VirtualAlbum_AddPhotoCompleted += (object sender, Pictures_VirtualAlbum_AddPhotoCompletedEventArgs evt) => { wh.Set(); };
         client.Pictures_VirtualAlbum_AddPhotoAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, BuddyApplication.RUID.ToString(), pic.PhotoID.ToString(), null);
         wh.WaitOne();
-        context.Response.Write(Json.Encode(upload.Result) + s);
+        context.Response.Write(Json.Encode(upload.Result));
     }
  
     public bool IsReusable {

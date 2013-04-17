@@ -23,7 +23,7 @@
             </form>
 
             <asp:Panel ID="MessagePanel" runat="server" Visible="false">
-                <span class="label label-important">Error</span>
+                <span ID="MessageTitle" class="" runat="server"></span>
                 <asp:Label ID="Message" runat="server" />
             </asp:Panel>
         </div>

@@ -47,6 +47,8 @@ public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
         {
             AlbumForm.Visible = false;
             MessagePanel.Visible = true;
+            MessageTitle.Attributes["class"] = "label label-important";
+            MessageTitle.InnerText = "Error";
             Message.Text = "Please login first";
             return;
         }
@@ -54,6 +56,8 @@ public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
         if (albumName == "")
         {
             MessagePanel.Visible = true;
+            MessageTitle.Attributes["class"] = "label label-important";
+            MessageTitle.InnerText = "Error";
             Message.Text = "Please input the album name";
             return;
         }
@@ -66,10 +70,14 @@ public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
         catch (Exception)
         {
             MessagePanel.Visible = true;
+            MessageTitle.Attributes["class"] = "label label-important";
+            MessageTitle.InnerText = "Error";
             Message.Text = "Cannot connect to the server";
             return;
         }
         MessagePanel.Visible = true;
-        Message.Text = System.Web.Helpers.Json.Encode(task.Result);
+        MessageTitle.Attributes["class"] = "label label-success";
+        MessageTitle.InnerText = "Success";
+        Message.Text = "Album created";
     }
 }

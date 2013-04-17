@@ -28,7 +28,13 @@ public class GetRecentUpdates : IHttpHandler, IRequiresSessionState {
                 return;
             }
             var album = evt.Result;
-            context.Response.Write(Json.Encode(album));
+            int cnt = Math.Min(album.Count, 20);
+            DataContract_VirtualPhotoList[] photo = new DataContract_VirtualPhotoList[cnt];
+            for (int i = cnt - 1, j = album.Count - 1; i >= 0; i--,  j--)
+            {
+                photo[i] = album[i];
+            }
+            context.Response.Write(Json.Encode(photo));
         };
         client.Pictures_VirtualAlbum_GetAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, BuddyApplication.SUPERTOKEN, BuddyApplication.RUID.ToString());
     }
