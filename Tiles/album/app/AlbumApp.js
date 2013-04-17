@@ -24,6 +24,14 @@ $(document).ready(function () {
         }
     });
 
+    $.getJSON('../GetAlbumList.ashx?id=' + uid, function (data) {
+        $.each(data, function (i, item) {
+            if (item.AlbumID == albumID) {
+                $('h1.start')[0].innerText = item.PhotoAlbumName;
+            }
+        });
+    });
+
     $.getJSON(url, function (data) {
         var ctr = 0;
 
@@ -49,8 +57,6 @@ $(document).ready(function () {
 
             ctr = ctr + 1;
             //}
-
-            
         });
         htmlString += "</tr></table>";
         $('#images').append($(htmlString));
