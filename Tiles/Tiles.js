@@ -18,48 +18,61 @@ window.DefaultTiles = [
 // Definition of the tiles, their default values.
 window.TileBuilders = {};
 
-var uid;
+var currUid;
+var uids;
 
 $.ajax('ServerStuff/GetUserID.ashx', {
     async: false,
     dataType: 'json',
     success: function (data) {
-        uid = data;
+        currUid = data;
     }
 });
 
-$.ajax('Tiles/album/GetAlbumList.ashx?id=' + uid, {
+$.ajax('ServerStuff/GetUserIDList.ashx', {
     async: false,
     dataType: 'json',
     success: function (data) {
-        $.each(data, function (i, item) {
-            var tile = 'a' + item.AlbumID;
-            window.TileBuilders[tile] = function () {
-                var name = 'a' + item.AlbumID;
-                var label = item.PhotoAlbumName;
-                var appUrl = 'Tiles/album/App/AlbumApp.html?uid=' + uid + '&aid=' + item.AlbumID;
-                var scriptSrc = ['tiles/album/album.js.aspx?uid=' + uid + '&aid=' + item.AlbumID];
-                return function (uniqueId) {
-                    return {
-                        uniqueId: uniqueId,
-                        name: name,
-                        label: label,
-                        size: "tile-double",
-                        color: "bg-color-darken",
-                        appUrl: appUrl,
-                        cssSrc: ["tiles/album/album.css"],
-                        scriptSrc: scriptSrc,
-                        initFunc: "album_load"
-                    };
-                };
-            }();
-
-            window.DefaultTiles[0].tiles.push({
-                id: tile,
-                name: tile
-            });
-        });
+        uids = data;
     }
+});
+
+$.each(uids, function (i, uid) {
+    $.ajax('Tiles/album/GetAlbumList.ashx?id=' + uid, {
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (j, item) {
+                var tile = 'a' + item.AlbumID;
+                window.TileBuilders[tile] = function () {
+                    var name = 'a' + item.AlbumID;
+                    var label = item.PhotoAlbumName;
+                    var appUrl = 'Tiles/album/App/AlbumApp.html?uid=' + uid + '&aid=' + item.AlbumID;
+                    var scriptSrc = ['tiles/album/album.js.aspx?uid=' + uid + '&aid=' + item.AlbumID];
+                    return function (uniqueId) {
+                        return {
+                            uniqueId: uniqueId,
+                            name: name,
+                            label: label,
+                            size: "tile-double",
+                            color: "bg-color-darken",
+                            appUrl: appUrl,
+                            cssSrc: ["tiles/album/album.css"],
+                            scriptSrc: scriptSrc,
+                            initFunc: "album_load"
+                        };
+                    };
+                }();
+
+                if (uid == currUid) {
+                    window.DefaultTiles[0].tiles.push({
+                        id: tile,
+                        name: tile
+                    });
+                }
+            });
+        }
+    });
 });
 
 

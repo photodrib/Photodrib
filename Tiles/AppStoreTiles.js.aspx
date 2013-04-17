@@ -1,9 +1,5 @@
-﻿/// <reference path="../js/jquery-1.7.2.min.js" />
-
-// Copyright 2012 Omar AL Zabir
-// Part of Droptiles project.
-// This file holds the definition of tiles and the tiles to show on the App Store.
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AppStoreTiles.js.aspx.cs" Inherits="Tiles_AppStoreTiles_js" %>
+/// <reference path="../js/jquery-1.7.2.min.js" />
 
 // Definition of the tiles, their default values.
 window.TileBuilders = {};
@@ -22,7 +18,7 @@ window.AppStoreTiles = [
 
 var uid;
 
-$.ajax('ServerStuff/GetUserID.ashx', {
+$.ajax('ServerStuff/GetUserID.ashx?name=<%= Request["name"] %>', {
     async: false,
     dataType: 'json',
     success: function (data) {

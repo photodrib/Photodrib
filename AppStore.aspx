@@ -5,7 +5,7 @@
 <asp:Content runat="server" ContentPlaceHolderID="scripts">
     <!-- Copyright 2012 Omar AL Zabir -->
     <script type="text/javascript" src="js/TheCore.js?v=15"></script>
-    <script type="text/javascript" src="Tiles/AppStoreTiles.js?v=15"></script>
+    <script type="text/javascript" src="Tiles/AppStoreTiles.js.aspx?name=<%= Request["name"] ?? "" %>"></script>
     <script type="text/javascript" src="js/AppStore.js?v=15"></script>       
 </asp:Content>
 
@@ -23,7 +23,7 @@
                             <li><a class="active" href="Default.aspx"><i class="icon-th-large"></i>Home</a></li>
                             <li>
                                 <form id="googleForm" class="navbar-search pull-left" action="AppStore.aspx">
-                                    <input id="googleSearchText" type="text" class="search-query span2" name="q" placeholder="Search User">
+                                    <input id="googleSearchText" type="text" class="search-query span2" name="name" placeholder="Search User">
                                 </form>
                             </li>
                         </ul>

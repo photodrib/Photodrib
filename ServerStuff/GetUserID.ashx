@@ -4,6 +4,7 @@ using Buddy;
 using System;
 using System.Web;
 using System.Web.Helpers;
+using System.Web.Security;
 using System.Web.SessionState;
 
 public class GetUserID : IHttpHandler, IRequiresSessionState {
@@ -18,7 +19,24 @@ public class GetUserID : IHttpHandler, IRequiresSessionState {
             context.Response.Write("null");
             return;
         }
-        context.Response.Write(Json.Encode(buddyUser.ID));
+        string userName = context.Request["name"] ?? "";
+        if (userName == "")
+        {
+            context.Response.Write(Json.Encode(buddyUser.ID));
+        }
+        else
+        {
+            MembershipUser user = Membership.GetUser(userName);
+            if (user == null)
+            {
+                context.Response.Write("null");
+            }
+            else
+            {
+                UserProfile profile = (UserProfile)UserProfile.Create(user.UserName);
+                context.Response.Write(Json.Encode(profile.BuddyUserID));
+            }
+        }
     }
  
     public bool IsReusable {

@@ -58,7 +58,7 @@ var ui = {
 
 
 // This is the viewModel for the App Store. 
-var viewModel = new DashboardModel("App Store", [], window.currentUser, ui);
+var viewModel = new DashboardModel("Albums", [], window.currentUser, ui);
 
 $(document).ready(function () {
 
