@@ -64,11 +64,9 @@
                 Please retun the js\Combine.bat file. 
                 Otherwise it won't work when you will deploy on a server.
             </div>
-        </div>
-            
-            
-            <br /><br /><br /><br /><br /><br /><br />
-            
+        </div>            
+        <br /><br /><br /><br /><br /><br /><br />
+        <script type="text/javascript" src="Edit.js"></script>
         <div class="container metro">
             <form id="container"  runat="server">
             <table id="PhotoEdit">
@@ -112,7 +110,8 @@
                         </div>
                     </td>
                     <td>
-                            <img id="picture"  />
+                        <div><img id="picture"  /></div>
+                            
                        
                     </td>
                     </tr> 
