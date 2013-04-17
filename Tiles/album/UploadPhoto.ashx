@@ -86,7 +86,7 @@ public class UploadPhoto : IHttpHandler, IRequiresSessionState {
         string s = "";
         EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
         client.Pictures_VirtualAlbum_AddPhotoCompleted += (object sender, Pictures_VirtualAlbum_AddPhotoCompletedEventArgs evt) => { s = evt.Result; wh.Set(); };
-        client.Pictures_VirtualAlbum_AddPhotoAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, BuddyApplication.SUPERTOKEN, BuddyApplication.RUID.ToString(), pic.PhotoID.ToString(), null);
+        client.Pictures_VirtualAlbum_AddPhotoAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, BuddyApplication.RUID.ToString(), pic.PhotoID.ToString(), null);
         wh.WaitOne();
         context.Response.Write(Json.Encode(upload.Result) + s);
     }

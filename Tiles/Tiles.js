@@ -24,7 +24,7 @@ window.DefaultTiles = [
 
 // Definition of the tiles, their default values.
 window.TileBuilders = {
-    RecentUploads: function (uniqueId) {
+    RecentUpdates: function (uniqueId) {
         return {
             uniqueId: uniqueId,
             name: 'RecentUpdates',
@@ -94,35 +94,6 @@ $.each(uids, function (i, uid) {
             });
         }
     });
-});
-
-$.ajax('Tiles/album/GetRecentUpdates.ashx', {
-    async: false,
-    dataType: 'json',
-    success: function (data) {
-        window.TileBuilders[tile] = function () {
-            var tile = 'RecentUpload';
-            var appUrl = 'Tiles/album/App/RecentUpdates.html?uid=' + currUid;
-            return function (uniqueId) {
-                return {
-                    uniqueId: uniqueId,
-                    name: 'RecentUpdates',
-                    label: 'Recent Updates',
-                    size: 'tile-double tile-double-vertical',
-                    color: "bg-color-darken",
-                    appUrl: appUrl,
-                    cssSrc: ["tiles/album/album.css"],
-                    scriptSrc: ['tiles/album/recent.js'],
-                    initFunc: "album_load"
-                };
-            };
-        }();
-
-        window.DefaultTiles[0].tiles.push({
-            id: tile,
-            name: tile
-        });
-    }
 });
 
 

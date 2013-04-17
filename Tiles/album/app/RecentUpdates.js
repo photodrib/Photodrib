@@ -11,7 +11,7 @@ $(document).ready(function () {
         $(this).animate({ paddingLeft: 0 }, 400);
     });
 
-    $.ajax('ServerStuff/GetUserID.ashx', {
+    $.ajax('../../../ServerStuff/GetUserID.ashx', {
         async: false,
         dataType: 'json',
         success: function (data) {
@@ -19,7 +19,7 @@ $(document).ready(function () {
         }
     });
 
-    $.getJSON('GetRecentUpdates.ashx', function (data) {
+    $.getJSON('../GetRecentUpdates.ashx', function (data) {
         var ctr = 0;
 
         var htmlString = "<table><tr>";
@@ -31,14 +31,12 @@ $(document).ready(function () {
             var link = '../ShowPhoto.html?uid=' + uid + '&pid=' + item.PhotoID;
             var comment = item.PhotoComment;
 
-            htmlString += '<td class="album_item">'
-                + '<a target="_blank" href="' + link + '" class="link" title="' + comment + '">';
+            htmlString += '<td class="album_item">';
             htmlString += '<img title="' + comment +
                 '" src="' + sourceOrig + '" ';
             htmlString += ' alt="' + comment +
                 '" />';
-            htmlString += '</a><div class="album_title">' + comment + '</div>' +
-                '</td>';
+            htmlString += '<div class="album_title">' + comment + '</div></td>';
 
             //$('#images').append($(htmlString));
 

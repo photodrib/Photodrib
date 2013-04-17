@@ -352,12 +352,33 @@ window.DefaultTiles = [
     {
         name :"Section1",
         tiles: []
+    },
+    {
+        name: "Section2",
+        tiles: [{
+            id: 'RecentUpdates',
+            name: 'RecentUpdates'
+        }]
     }
 ];
   
 
 // Definition of the tiles, their default values.
-window.TileBuilders = {};
+window.TileBuilders = {
+    RecentUpdates: function (uniqueId) {
+        return {
+            uniqueId: uniqueId,
+            name: 'RecentUpdates',
+            label: 'Recent Updates',
+            size: 'tile-double tile-double-vertical',
+            color: "bg-color-darken",
+            appUrl: 'Tiles/album/App/RecentUpdates.html',
+            cssSrc: ["tiles/album/album.css"],
+            scriptSrc: ['tiles/album/recent.js'],
+            initFunc: "album_load"
+        };
+    }
+};
 
 var currUid;
 var uids;
