@@ -1,32 +1,8 @@
 <%@ Page Language="C#" AutoEventWireup="true"  CodeFile="Edit.aspx.cs" Inherits="Edit" MasterPageFile="ServerStuff.master" Async="true" %>
-<%@ OutputCache NoStore="true" Location="None"  %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="scripts" runat="server">
-    <!-- Copyright 2012 Omar AL Zabir -->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>    
-    
-<% if (Request.IsLocal) { %>    
-    <!-- 
-        If you change any of the below javascript files, make sure you run the Combine.bat
-        file in the /js folder to generate the CombinedDashboard.js file again. And then don't
-        forget to update the ?v=14#. Otherwise user's will have cached copies in their browser
-        and won't get the newly deployed file. -->
-    <script type="text/javascript" src="js/TheCore.js?v=14"></script>
-    <script type="text/javascript" src="tiles/tiles.js?v=14"></script>
-    <script type="text/javascript" src="js/Dashboard.js?v=14"></script>
-    
-<% } else { %>    
-    <script type="text/javascript" src="js/CombinedDashboard.js?v=14"></script>
-<% } %>
-    <script src="Edit.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            <%= GetAlerts() %>
-        });
-    </script>
-    
+<asp:Content ID="Content1" ContentPlaceHolderID="Header" runat="server">
+    Edit Photo
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="server">
     <div id="body" class="unselectable">
         <div id="navbar" class="navbar navbar-fixed-top">
