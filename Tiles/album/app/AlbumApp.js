@@ -80,6 +80,14 @@ function delAlbum() {
     });
 }
 
+function chgZoom(o, b) {
+    if (b) {
+        o.style.zoom = 1.1;
+    } else {
+        o.style.zoom = 1;
+    }
+}
+
 function upload() {
     window.open('../upload.html?id=' + albumID, "_blank");
 }

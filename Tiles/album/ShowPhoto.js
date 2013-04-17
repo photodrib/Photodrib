@@ -1,8 +1,6 @@
 ﻿/// <reference path="../../js/jquery-1.7.2.min.js" />
 /// <reference path="../../js/jquery.url.js" />
 
-function init() {
-}
 
 function initialize() {
     var uid = $.url.param('uid');
@@ -35,15 +33,6 @@ function initialize() {
     });
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
-
-$(document).ready(function () {
-    $('h1.start').hover(function () { //mouse in
-        $(this).animate({ paddingLeft: '20px' }, 400);
-    }, function () { //mouse out
-        $(this).animate({ paddingLeft: 0 }, 400);
-    });
-});
 
 function delPhoto() {
     pID = parseInt($.url.param('pid'));
@@ -57,3 +46,23 @@ function delPhoto() {
         }
     });
 }
+
+function chgZoom(o, b) {
+    if (b) {
+        o.style.zoom = 1.1;
+    } else {
+        o.style.zoom = 1;
+    }
+}
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+$(document).ready(function () {
+    $('h1.start').hover(function () { //mouse in
+        $(this).animate({ paddingLeft: '20px' }, 400);
+    }, function () { //mouse out
+        $(this).animate({ paddingLeft: 0 }, 400);
+    });
+});
+
