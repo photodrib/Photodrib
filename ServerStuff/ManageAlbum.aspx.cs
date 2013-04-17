@@ -63,14 +63,11 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
                 continue;
             }
             BuddyServiceClient client = new BuddyServiceClient();
-            EventWaitHandle wh = new EventWaitHandle(false, EventResetMode.AutoReset);
             client.Pictures_PhotoAlbum_DeleteCompleted += (object sdr, Pictures_PhotoAlbum_DeleteCompletedEventArgs evt) =>
             {
-                wh.Set();
             };
             
             client.Pictures_PhotoAlbum_DeleteAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, albumID.ToString());
-            wh.WaitOne();
 
         }
         Response.Redirect("ManageAlbum.aspx", true);
