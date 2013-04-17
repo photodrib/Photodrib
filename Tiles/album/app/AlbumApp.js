@@ -19,6 +19,7 @@ $(document).ready(function () {
     $.getJSON('../../../ServerStuff/GetUserID.ashx', function (currUid) {
         if (uid == currUid) {
             $('a.delbutton')[0].style.visibility = 'visible';
+            $('a.uploadbutton')[0].style.visibility = 'visible';
         }
     });
 
@@ -77,4 +78,8 @@ function delAlbum() {
             closeApp();
         }
     });
+}
+
+function upload() {
+    window.open('../upload.html?id=' + albumID, "_blank");
 }

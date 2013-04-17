@@ -466,7 +466,7 @@ body {
         margin-right: 20px;
     }
 
-    .appnavbar .delbutton {
+    .appnavbar .delbutton, .appnavbar .uploadbutton {
         margin-left: 20px;
         visibility: hidden;
     }
