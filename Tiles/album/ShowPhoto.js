@@ -44,3 +44,16 @@ $(document).ready(function () {
         $(this).animate({ paddingLeft: 0 }, 400);
     });
 });
+
+function delPhoto() {
+    pID = parseInt($.url.param('pid'));
+    if (!window.confirm('Are you sure to delete this photo?')) return;
+    $.getJSON('./DeletePhoto.ashx?id=' + pID, function (data) {
+        if (!data) {
+            alert('Failed');
+        } else {
+            alert('Photo deleted');
+            closeApp();
+        }
+    });
+}
