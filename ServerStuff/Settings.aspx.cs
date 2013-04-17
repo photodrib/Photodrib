@@ -28,6 +28,8 @@ public partial class Settings : System.Web.UI.Page
 
     protected void Save_Button_Click(object sender, EventArgs e)
     {
+        AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
+        if (buddyUser == null) return;
         var firstName = Request["firstname"];
         var lastname = Request["lastname"];
         var currentPassword = Request["current_password"];
@@ -44,8 +46,10 @@ public partial class Settings : System.Web.UI.Page
                     Message.Text = "Password and confirmation does not match.";
                     return;
                 }
-
-                if (!Membership.GetUser(Profile.UserName).ChangePassword(currentPassword, newPassword))
+                string hashedPassword = HashString.GetHash(newPassword, System.Security.Cryptography.SHA1.Create());
+                var task = buddyUser.Update(password: hashedPassword);
+                task.Wait();
+                if (task.IsCanceled || task.IsFaulted || !task.Result || !Membership.GetUser(Profile.UserName).ChangePassword(currentPassword, newPassword))
                 {
                     MessagePanel.Visible = true;
                     Message.Text = "Invalid old password or new passwords are in invalid format.";
