@@ -79,7 +79,7 @@ function delPhoto() {
 }
 function editPhoto() {
     pID = parseInt($.url.param('pid'));
-    window.location("../../ServerStuff/Edit.aspx?id=" + pID);
+    window.location = "../../ServerStuff/Edit.aspx?id=" + pID;
 }
 
 function chgZoom(o, b) {
