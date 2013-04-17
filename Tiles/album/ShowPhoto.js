@@ -22,6 +22,7 @@ function initialize() {
     if (!currUid) return;
     if (uid == currUid) {
         $('a.delbutton')[0].style.visibility = 'visible';
+        $('a.editbutton')[0].style.visibility = 'visible';
     }
 
     $.getJSON('GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
@@ -75,6 +76,10 @@ function delPhoto() {
             window.close();
         }
     });
+}
+function editPhoto() {
+    pID = parseInt($.url.param('pid'));
+    window.location("../../ServerStuff/Edit.aspx?id=" + pID);
 }
 
 function chgZoom(o, b) {
