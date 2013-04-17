@@ -2,7 +2,7 @@
 /// <reference path="../js/jquery.url.js" />
 
 function initialize() {
-    var uid
+    var uid;
     var pid = $.url.param('id');
 
     $.ajax('GetUserID.ashx', {
@@ -14,7 +14,7 @@ function initialize() {
     });
 
     $.getJSON('../Tiles/album/GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
-        picture.src = data.FullUrl;
+        picture.src = data.FullPhotoURL;
         picture.title = picture.alt = data.PhotoComment;
         picture.style.visibility = 'visible';
     });
