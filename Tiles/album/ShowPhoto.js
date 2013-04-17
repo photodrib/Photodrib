@@ -10,6 +10,19 @@
 function initialize() {
     var uid = $.url.param('uid');
     var pid = $.url.param('pid');
+    var currUid;
+
+    $.ajax('../../ServerStuff/GetUserID.ashx', {
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            currUid = data;
+        }
+    });
+    if (!currUid) return;
+    if (uid == currUid) {
+        $('a.delbutton')[0].style.visibility = 'visible';
+    }
 
     $.getJSON('GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
         var src = data.FullPhotoURL;
@@ -59,7 +72,7 @@ function delPhoto() {
             alert('Failed');
         } else {
             alert('Photo deleted');
-            closeApp();
+            window.close();
         }
     });
 }

@@ -41,6 +41,7 @@
                             <li><a class="active" href="?"><i class="icon-th-large"></i>Home</a></li>
                             <li><a href="AppStore.aspx"><i class="icon-shopping-cart"></i>Albums</a></li>
                             <li><a onclick="ui.createAlbum()" href="#CreateAlbum"><i class="icon-plus-sign"></i>Create Album</a></li>
+                            <li><a onclick="ui.manageAlbums()" href="#ManageAlbums"><i class="icon-edit"></i>Manage Albums</a></li>
                             <li>
                                 <form id="googleForm" class="navbar-search pull-left" action="AppStore.aspx">
                                     <input id="googleSearchText" type="text" class="search-query span2" name="name" placeholder="Search User">
