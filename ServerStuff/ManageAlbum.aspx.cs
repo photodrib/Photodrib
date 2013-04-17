@@ -20,6 +20,23 @@ public partial class ServerStuff_ManageAlbum : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        if (!Profile.IsAnonymous)
+        {
+            Response.Cookies.Add(new HttpCookie("p", Profile.Tiles)
+            {
+                Expires = DateTime.Now.AddDays(30)
+            });
+            if (Session["buddyUser"] == null)
+            {
+                BuddyClient client = BuddyApplication.Create();
+                var task = client.Login(Profile.BuddyToken);
+                task.Wait();
+                if (!task.IsCanceled && !task.IsFaulted)
+                {
+                    Session["buddyUser"] = task.Result;
+                }
+            }
+        }
     }
 
     protected void DeleteButton_Click(object sender, EventArgs e)

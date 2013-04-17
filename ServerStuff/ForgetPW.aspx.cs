@@ -22,8 +22,8 @@ public partial class ForgetPW : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
+
     protected void resetPW_Click(object sender, EventArgs e)
     {
         var username = Request["username"];

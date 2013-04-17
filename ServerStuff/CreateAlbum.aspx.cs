@@ -8,21 +8,48 @@ using System.Web.UI.WebControls;
 
 public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
 {
-    AuthenticatedUser buddyUser;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        buddyUser = Session["buddyUser"] as AuthenticatedUser;
+        if (Profile.IsAnonymous)
+        {
+            AlbumForm.Visible = false;
+            MessagePanel.Visible = true;
+            Message.Text = "Please login first";
+            return;
+        }
+        else
+        {
+            Response.Cookies.Add(new HttpCookie("p", Profile.Tiles)
+            {
+                Expires = DateTime.Now.AddDays(30)
+            });
+            if (Session["buddyUser"] == null)
+            {
+                BuddyClient client = BuddyApplication.Create();
+                var task = client.Login(Profile.BuddyToken);
+                task.Wait();
+                if (task.IsCanceled || task.IsFaulted)
+                {
+                    AlbumForm.Visible = false;
+                    MessagePanel.Visible = true;
+                    Message.Text = "Cannot connect to the server, please login again";
+                }
+                Session["buddyUser"] = task.Result;
+            }
+        }
+    }
+
+    protected void CreateAlbumButton_Click(object sender, EventArgs e)
+    {
+        AuthenticatedUser buddyUser = Session["buddyUser"];
         if (buddyUser == null)
         {
             AlbumForm.Visible = false;
             MessagePanel.Visible = true;
             Message.Text = "Please login first";
+            return;
         }
-
-    }
-    protected void CreateAlbumButton_Click(object sender, EventArgs e)
-    {
         string albumName = Request["name"] ?? "";
         if (albumName == "")
         {
@@ -44,6 +71,5 @@ public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
         }
         MessagePanel.Visible = true;
         Message.Text = System.Web.Helpers.Json.Encode(task.Result);
-        return;
     }
 }
