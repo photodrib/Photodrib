@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="album.js.aspx.cs" Inherits="Tiles_album_album_js" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="album.js.aspx.cs" Inherits="Tiles_album_album_js" ContentType="application/javascript" %>
 /// <reference path="../../js/Underscore.js" />
 /// <reference path="../../js/jquery-1.7.2.min.js" />
 /// <reference path="../../js/jquery.url.js" />
@@ -8,7 +8,7 @@
 
 
 function album_load(tile, div) {
-    var url = 'Tiles/album/GetAlbum.aspx?uid=<%= Request["uid"] %>&aid=<%= Request["aid"] %>';
+    var url = 'Tiles/album/GetAlbum.ashx?uid=<%= Request["uid"] %>&aid=<%= Request["aid"] %>';
     
     $.getJSON(url, function (data) {        
         var ctr = 0;
@@ -35,5 +35,4 @@ function album_load(tile, div) {
 
         tile.counter(ctr);
     });
-    
 }

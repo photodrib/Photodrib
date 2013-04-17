@@ -361,7 +361,7 @@ window.TileBuilders = {};
 
 var uid;
 
-$.ajax('ServerStuff/GetUserID.aspx', {
+$.ajax('ServerStuff/GetUserID.ashx', {
     async: false,
     dataType: 'json',
     success: function (data) {
@@ -369,7 +369,7 @@ $.ajax('ServerStuff/GetUserID.aspx', {
     }
 });
 
-$.ajax('Tiles/album/GetAlbumList.aspx?id=' + uid, {
+$.ajax('Tiles/album/GetAlbumList.ashx?id=' + uid, {
     async: false,
     dataType: 'json',
     success: function (data) {

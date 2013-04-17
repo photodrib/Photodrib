@@ -1,39 +1,38 @@
-﻿using Buddy;
+﻿<%@ WebHandler Language="C#" Class="UploadPhoto" %>
+
+using Buddy;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Helpers;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Web.SessionState;
 
-public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
-{
-    protected void Page_Load(object sender, EventArgs e)
+public class UploadPhoto : IHttpHandler, IRequiresSessionState {
+
+    public void ProcessRequest(HttpContext context)
     {
-        Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        Response.ContentType = "text/plain";
-        AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
+        context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        context.Response.ContentType = "text/plain";
+        AuthenticatedUser buddyUser = context.Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null)
         {
-            Response.Write("null");
+            context.Response.Write("null");
             return;
         }
         int albumID;
         try
         {
-            albumID = int.Parse(Request["id"]);
+            albumID = int.Parse(context.Request["id"]);
         }
         catch (Exception)
         {
-            Response.Write("null");
+            context.Response.Write("null");
             return;
         }
         double lat;
         try
         {
-            lat = double.Parse(Request["lat"]);
+            lat = double.Parse(context.Request["lat"]);
         }
         catch (Exception)
         {
@@ -42,26 +41,26 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
         double lng;
         try
         {
-            lng = double.Parse(Request["lng"]);
+            lng = double.Parse(context.Request["lng"]);
         }
         catch (Exception)
         {
             lng = 0;
         }
-        string filename = Request.Headers["FILE_NAME"];
+        string filename = context.Request.Headers["FILE_NAME"];
         if (filename == null)
         {
-            Response.Write("null");
+            context.Response.Write("null");
             return;
         }
         string input;
-        using (var sr = new StreamReader(Request.InputStream))
+        using (var sr = new StreamReader(context.Request.InputStream))
         {
             input = sr.ReadToEnd();
         }
         if (input == "")
         {
-            Response.Write("null");
+            context.Response.Write("null");
             return;
         }
         byte[] picture = Convert.FromBase64String(input);
@@ -69,7 +68,7 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
         getAlbum.Wait();
         if (getAlbum.IsCanceled || getAlbum.IsFaulted)
         {
-            Response.Write("null");
+            context.Response.Write("null");
             return;
         }
         PhotoAlbum album = getAlbum.Result;
@@ -77,9 +76,16 @@ public partial class Tiles_album_app_UploadPhoto : System.Web.UI.Page
         upload.Wait();
         if (upload.IsCanceled || upload.IsFaulted)
         {
-            Response.Write("null");
+            context.Response.Write("null");
             return;
         }
-        Response.Write(Json.Encode(upload.Result) + Request["lat"] + "," + Request["lng"]);
+        context.Response.Write(Json.Encode(upload.Result));
     }
+ 
+    public bool IsReusable {
+        get {
+            return false;
+        }
+    }
+
 }

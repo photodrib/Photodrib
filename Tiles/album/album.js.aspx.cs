@@ -9,6 +9,5 @@ public partial class Tiles_album_album_js : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Response.ContentType = "application/javascript";
     }
 }

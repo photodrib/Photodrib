@@ -21,6 +21,7 @@ public class Logout : IHttpHandler {
 
             context.Response.Cookies.Set(cookie);
         }
+        context.Session["buddyUser"] = null;
 
         System.Web.Security.FormsAuthentication.SignOut();
         context.Response.Redirect("Breakout.aspx");

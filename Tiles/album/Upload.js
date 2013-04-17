@@ -1,4 +1,7 @@
-﻿var albumID;
+﻿/// <reference path="../../js/jquery-1.7.2.min.js" />
+/// <reference path="../../js/jquery.url.js" />
+
+var albumID;
 var lat = 0;
 var lng = 0;
 var geocoder;
@@ -28,6 +31,14 @@ function init() {
     progressBar.style.visibility = 'hidden';
     progressBar.count = 0;
 
+    $('#address').keypress(function (e) {
+        if (e.keyCode == 13) {
+            e.stopPropagation();
+            e.preventDefault();
+            codeAddress();
+        }
+    });
+
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(lat, lng);
     var myOptions = {
@@ -44,7 +55,6 @@ function codeAddress() {
         if (status == google.maps.GeocoderStatus.OK) {
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
-            console.log(results[0].geometry.location)
             map.setCenter(results[0].geometry.location);
             this.marker = new google.maps.Marker({
                 title: address,
@@ -83,7 +93,7 @@ function showMessage(msg, color) {
 function handleReaderLoadEnd(e) {
     var data = e.target.result.split(',')[1];
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'UploadPhoto.aspx?id=' + e.target.albumID + '&lat=' + lat + '&lng=' + lng, true);
+    xhr.open('POST', 'UploadPhoto.ashx?id=' + e.target.albumID + '&lat=' + lat + '&lng=' + lng, true);
     xhr.setRequestHeader('FILE_NAME', e.target.filename);
     xhr.upload.addEventListener('progress', function (e) {
         progressBar.value = e.loaded;
@@ -92,15 +102,15 @@ function handleReaderLoadEnd(e) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             progressBar.value = progressBar.max;
-            //if (xhr.status != 200) {
-            //    showMessage("Error code = " + xhr.status, '#700');
-            //} else {
-            showMessage(xhr.responseText);
-            /*var resp = JSON.parse(xhr.responseText);
-            var color = resp[0] == 0 ? '#070' : '#700'
-            showMessage(resp[1], color);
-            getPhotos();*/
-            //}
+            if (xhr.status != 200) {
+                showMessage("Error code = " + xhr.status, '#700');
+            } else {
+                showMessage(xhr.responseText);
+                /*var resp = JSON.parse(xhr.responseText);
+                var color = resp[0] == 0 ? '#070' : '#700'
+                showMessage(resp[1], color);
+                getPhotos();*/
+            }
             setTimeout(function () {
                 if (--progressBar.count == 0) {
                     progressBar.style.visibility = 'hidden';

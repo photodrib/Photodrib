@@ -8,7 +8,7 @@ function initialize() {
     var uid = $.url.param('uid');
     var pid = $.url.param('pid');
 
-    $.getJSON('GetPhoto.aspx?uid=' + uid + '&pid=' + pid, function (data) {
+    $.getJSON('GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
         bigImage.src = data.FullPhotoURL;
         bigImage.title = bigImage.alt = data.PhotoComment;
         bigImage.style.visibility = 'visible';

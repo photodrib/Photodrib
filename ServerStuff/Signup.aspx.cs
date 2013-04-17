@@ -92,6 +92,7 @@ public partial class Signup : System.Web.UI.Page
             profile.FirstName = firstName;
             profile.LastName = lastName;
             profile.BuddyToken = buddyUser.Token;
+            profile.BuddyUserID = buddyUser.ID;
             profile.Save();
 
             Response.Cookies.Add(FormsAuthentication.GetAuthCookie(username, rememberMe));

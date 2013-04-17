@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     var albumID = parseInt($.url.param('aid'));
     var uid = parseInt($.url.param('uid'));
-    var url = '../GetAlbum.aspx?uid=' + uid + '&aid=' + albumID;
+    var url = '../GetAlbum.ashx?uid=' + uid + '&aid=' + albumID;
 
     $.getJSON(url, function (data) {
         var ctr = 0;

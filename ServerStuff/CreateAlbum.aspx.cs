@@ -42,7 +42,7 @@ public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
 
     protected void CreateAlbumButton_Click(object sender, EventArgs e)
     {
-        AuthenticatedUser buddyUser = Session["buddyUser"];
+        AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null)
         {
             AlbumForm.Visible = false;

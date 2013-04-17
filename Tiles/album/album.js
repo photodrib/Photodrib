@@ -7,7 +7,7 @@
 
 
 function album_load(tile, div) {
-    var url = 'Tiles/album/GetAlbum.aspx?uid=3295454&aid=5401212';
+    var url = 'Tiles/album/GetAlbum.ashx?uid=3295454&aid=5401212';
     
     $.getJSON(url, function (data) {        
         var ctr = 0;

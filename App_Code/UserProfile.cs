@@ -41,6 +41,12 @@ public class UserProfile : ProfileBase
         set { base["BuddyToken"] = value; Save(); }
     }
 
+    public int BuddyUserID
+    {
+        get { return ((int)(base["BuddyUserID"])); }
+        set { base["BuddyUserID"] = value; Save(); }
+    }
+
     public string Tiles
     {
         get { return ((string)(base["Tiles"])); }
