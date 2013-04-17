@@ -21,7 +21,7 @@ public class DeletePhoto : IHttpHandler, IRequiresSessionState {
         int pictureID;
         try
         {
-            pictureID = int.Parse(context.Request["pid"]);
+            pictureID = int.Parse(context.Request["id"]);
         }
         catch (Exception)
         {
