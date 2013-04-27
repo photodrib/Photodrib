@@ -5,7 +5,7 @@ function initialize() {
     var uid;
     var pid = $.url.param('id');
 
-    // get the info of the user
+    // tell who the current user is
 
     $.ajax('GetUserID.ashx', {
         async: false,
@@ -15,7 +15,7 @@ function initialize() {
         }
     });
     var picture = document.getElementById('picture');
-    //get the basic info of the photo
+    //get the source url and title of the photo
     $.getJSON('../Tiles/album/GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
         picture.src = data.FullPhotoURL;
         picture.title = picture.alt = data.PhotoComment;

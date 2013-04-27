@@ -19,7 +19,7 @@ public partial class Admin : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
     }
-    // the mothod will be called when the delete button is clicked
+    // handle the delete button clicking
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
         string[] del = Request["del"].Split(',');
@@ -33,7 +33,7 @@ public partial class Admin : System.Web.UI.Page
         }
         foreach (string user in users.Keys)
         {
-            //make the HTTP request
+            //make an HTTP request
             req = (HttpWebRequest)HttpWebRequest.Create("https://webservice.buddyplatform.com/Service/v1/BuddyService.ashx?"
                 + "UserAccount_Profile_DeleteAccount&BuddyApplicationName=" + BuddyApplication.APPNAME
                 + "&BuddyApplicationPassword=" + BuddyApplication.APPPASS

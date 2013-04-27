@@ -37,8 +37,8 @@ public partial class Edit : System.Web.UI.Page
             }
         }
     }
-    // handle the edit button1 clicked
-    // change the contrast of one photo
+    // handle the editing contrast button clicking
+    // change the contrast of the photo
     protected void EditButton_Click1(object sender, EventArgs e)
     {
         float contrast;
@@ -55,8 +55,8 @@ public partial class Edit : System.Web.UI.Page
         param = "Contrast=" + contrast.ToString() + ";";
         ApplyFilter("Color Operations", param);
     }
-    // handle the edit button2 clicked
-    // change the brightness of one photo
+    // handle the editing brightness button clicking
+    // change the brightness of the photo
     protected void EditButton_Click2(object sender, EventArgs e)
     {
         float brightness;
@@ -73,8 +73,8 @@ public partial class Edit : System.Web.UI.Page
         param = "Brightness=" + brightness.ToString() + ";";
         ApplyFilter("Color Operations", param);
     }
-    // handle the edit button3 clicked
-    // change the size of one photo
+    // handle the resizing button clicking
+    // resize the photo
     protected void EditButton_Click3(object sender, EventArgs e)
     {
         float resize;
