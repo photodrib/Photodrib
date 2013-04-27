@@ -20,10 +20,11 @@ using System.Net.Mail;
 
 public partial class ForgetPW : System.Web.UI.Page
 {
+    // load the page
     protected void Page_Load(object sender, EventArgs e)
     {
     }
-
+    // handle the click on reset password
     protected void resetPW_Click(object sender, EventArgs e)
     {
         var username = Request["username"];
@@ -49,6 +50,7 @@ public partial class ForgetPW : System.Web.UI.Page
             Message.Text = "Invalid username";
             return;
         }
+        // making the HTTP request and connect to the buddy server to reset the password
         profile = (UserProfile)UserProfile.Create(user.UserName);
         newpw = user.ResetPassword();
         string hashedPassword = HashString.GetHash(newpw, System.Security.Cryptography.SHA1.Create());
@@ -73,6 +75,7 @@ public partial class ForgetPW : System.Web.UI.Page
             Message.Text = "Cannot connect to the server. Please try again later";
             return;
         }
+        // sent the reset email to the email signed by the user
         mailMessage = new MailMessage();
         mailMessage.From = new MailAddress("admin@photodrib.com", "Photodrib Admin");
         mailMessage.To.Add(user.Email);

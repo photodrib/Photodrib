@@ -14,11 +14,12 @@ using System.Web.UI.WebControls;
 public partial class Admin : System.Web.UI.Page
 {
     private const string ADMINTOKEN = "UT-ccad4114-7013-4437-91d1-98d005d8a5d8";
-
+  
+    // load the page
     protected void Page_Load(object sender, EventArgs e)
     {
     }
-
+    // the mothod will be called when the delete button is clicked
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
         string[] del = Request["del"].Split(',');
@@ -32,6 +33,7 @@ public partial class Admin : System.Web.UI.Page
         }
         foreach (string user in users.Keys)
         {
+            //make the HTTP request
             req = (HttpWebRequest)HttpWebRequest.Create("https://webservice.buddyplatform.com/Service/v1/BuddyService.ashx?"
                 + "UserAccount_Profile_DeleteAccount&BuddyApplicationName=" + BuddyApplication.APPNAME
                 + "&BuddyApplicationPassword=" + BuddyApplication.APPPASS
@@ -39,9 +41,10 @@ public partial class Admin : System.Web.UI.Page
             resp = (HttpWebResponse)req.GetResponse();
             Membership.DeleteUser(user);
         }
+        //redirect back
         Response.Redirect("Admin.aspx", true);
     }
-
+    //connect the buddy api when loading the page
     protected void UserTable_Load(object sender, EventArgs e)
     {
         MembershipUserCollection users = Membership.GetAllUsers();
@@ -55,6 +58,7 @@ public partial class Admin : System.Web.UI.Page
         foreach (MembershipUser user in users)
         {
             UserProfile profile = (UserProfile)UserProfile.Create(user.UserName);
+            // making the request
             req = (HttpWebRequest)HttpWebRequest.Create("https://webservice.buddyplatform.com/Service/v1/BuddyService.ashx?"
                 + "UserAccount_Profile_GetUserIDFromUserToken&BuddyApplicationName=" + BuddyApplication.APPNAME
                 + "&BuddyApplicationPassword=" + BuddyApplication.APPPASS

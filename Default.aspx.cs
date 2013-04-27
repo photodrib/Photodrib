@@ -5,6 +5,7 @@ using System.Web;
 
 public partial class _Default : System.Web.UI.Page 
 {
+    // connect to the buddy when loading the page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Profile.IsAnonymous)
@@ -25,7 +26,7 @@ public partial class _Default : System.Web.UI.Page
             }
         }
     }
-
+    // combine the new and old javascript file
     private bool IsCombinedJSOlder(string path)
     {
         var jsPath = Context.Server.MapPath(path);

@@ -5,6 +5,7 @@ using System.Web.Security;
 
 public partial class Settings : System.Web.UI.Page
 {
+    // load the page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Profile.IsAnonymous)
@@ -25,9 +26,10 @@ public partial class Settings : System.Web.UI.Page
             }
         }
     }
-
+    // handle the save button clicked 
     protected void Save_Button_Click(object sender, EventArgs e)
     {
+        // generate the request to the buddy server
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null) return;
         var firstName = Request["firstname"];
@@ -35,7 +37,7 @@ public partial class Settings : System.Web.UI.Page
         var currentPassword = Request["current_password"];
         var newPassword = Request["new_password"];
         var confirmPassword = Request["confirm_password"];
-        
+        // check the sign in info
         try
         {
             if (!string.IsNullOrEmpty(newPassword))

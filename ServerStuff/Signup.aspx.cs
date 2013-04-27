@@ -9,10 +9,11 @@ public partial class Signup : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
     }
-
+    // handle the signup button clicked
     protected void Signup_Button_Click(object sender, EventArgs e)
     {
         Page.DataBind();
+        // generate the request to the buddy server with user info
         var username = Request["username"];
         var password = Request["password"];
         var confirmPassword = Request["confirm_password"];
@@ -62,7 +63,7 @@ public partial class Signup : System.Web.UI.Page
             Message.Text = "Password and confirmation does not match.";
             return;
         }
-
+        // create the new user in buddy
         try
         {
             var user = Membership.CreateUser(username, password, email);
@@ -104,7 +105,7 @@ public partial class Signup : System.Web.UI.Page
             Message.Text = x.Message;
         }
     }
-
+    // call back the created user
     private void CreateUserCallback(AuthenticatedUser buddyUser, BuddyCallbackParams callbackParams)
     {
         object[] state = (object[])callbackParams.State;
@@ -117,7 +118,7 @@ public partial class Signup : System.Web.UI.Page
             state[0] = callbackParams.Exception;
         }
     }
-
+    // some basic info in the gender option
     protected void gender_Load(object sender, EventArgs e)
     {
         KeyValuePair<int, string>[] genderList = { new KeyValuePair<int, string>(0, "Secret"),

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
 {
-
+// the default loading page method
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Profile.IsAnonymous)
@@ -20,6 +20,7 @@ public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
         }
         else
         {
+            // connect to the buddy server if logged in
             Response.Cookies.Add(new HttpCookie("p", Profile.Tiles)
             {
                 Expires = DateTime.Now.AddDays(30)
@@ -39,9 +40,10 @@ public partial class Tiles_album_CreateAlbum : System.Web.UI.Page
             }
         }
     }
-
+    //handle the clicked on create album button
     protected void CreateAlbumButton_Click(object sender, EventArgs e)
     {
+        //handle the creating album in buddy
         AuthenticatedUser buddyUser = Session["buddyUser"] as AuthenticatedUser;
         if (buddyUser == null)
         {

@@ -4,6 +4,7 @@ using System.Web;
 
 public partial class Tiles_AppStore : System.Web.UI.Page
 {
+    // connect to the buddy when loading the page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Profile.IsAnonymous)

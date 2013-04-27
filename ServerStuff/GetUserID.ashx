@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 
 public class GetUserID : IHttpHandler, IRequiresSessionState {
-
+    // connect to the buddy server
     public void ProcessRequest(HttpContext context)
     {
         context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
