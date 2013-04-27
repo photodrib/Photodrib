@@ -11,6 +11,8 @@ public class GetPhoto : IHttpHandler, IRequiresSessionState {
 
     public void ProcessRequest(HttpContext context)
     {
+        //Get the photo given the owner's user ID and the photo ID
+        //Output as a JSON object of the photo information
         context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         context.Response.ContentType = "text/plain";
         int pid;
@@ -48,6 +50,11 @@ public class GetPhoto : IHttpHandler, IRequiresSessionState {
                 return;
             }
             var pic = evt.Result;
+            if (pic.Count == 0)
+            {
+                context.Response.Write("null");
+                return;
+            }
             context.Response.Write(Json.Encode(pic[0]));
         };
         client.Pictures_Photo_GetAsync(BuddyApplication.APPNAME, BuddyApplication.APPPASS, buddyUser.Token, uid.ToString(), pid.ToString());

@@ -11,6 +11,8 @@ public class GetRecentUpdatesInfo : IHttpHandler, IRequiresSessionState {
 
     public void ProcessRequest(HttpContext context)
     {
+        //Get the information of the virtual album of the recent updates
+        //Output as a JSON object of the information of the virtual album of the recent updates
         context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         context.Response.ContentType = "text/plain";
         AuthenticatedUser buddyUser = context.Session["buddyUser"] as AuthenticatedUser;

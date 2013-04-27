@@ -13,6 +13,8 @@ public class UploadPhoto : IHttpHandler, IRequiresSessionState {
 
     public void ProcessRequest(HttpContext context)
     {
+        //Upload a photo to the album of the given album ID
+        //The picture file is sent via POST method and is encoded using base64
         context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         context.Response.ContentType = "text/plain";
         AuthenticatedUser buddyUser = context.Session["buddyUser"] as AuthenticatedUser;
@@ -65,6 +67,7 @@ public class UploadPhoto : IHttpHandler, IRequiresSessionState {
             context.Response.Write("null");
             return;
         }
+        //Decoding the base64 string to binary data
         byte[] picture = Convert.FromBase64String(input);
         var getAlbum = buddyUser.PhotoAlbums.Get(albumID);
         getAlbum.Wait();

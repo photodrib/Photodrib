@@ -11,6 +11,8 @@ public class GetAlbumList : IHttpHandler, IRequiresSessionState {
 
     public void ProcessRequest(HttpContext context)
     {
+        //Get the list of all albums of the user given the user ID
+        //Output as a JSON object of the album list
         context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         context.Response.ContentType = "text/plain";
         AuthenticatedUser buddyUser = context.Session["buddyUser"] as AuthenticatedUser;

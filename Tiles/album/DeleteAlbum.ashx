@@ -10,6 +10,7 @@ public class DeleteAlbum : IHttpHandler, IRequiresSessionState {
 
     public void ProcessRequest(HttpContext context)
     {
+        //Delete the whole album of the user currently logged in given the album ID
         context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         context.Response.ContentType = "text/plain";
         AuthenticatedUser buddyUser = context.Session["buddyUser"] as AuthenticatedUser;
@@ -44,7 +45,15 @@ public class DeleteAlbum : IHttpHandler, IRequiresSessionState {
         }
 
         var delete = album.Delete();
-        delete.Wait();
+        try
+        {
+            delete.Wait();
+        }
+        catch (Exception)
+        {
+            context.Response.Write("null");
+            return;
+        }
         if (delete.IsCanceled || delete.IsFaulted)
         {
             context.Response.Write("null");
