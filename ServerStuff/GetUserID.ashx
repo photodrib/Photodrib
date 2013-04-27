@@ -8,10 +8,11 @@ using System.Web.Security;
 using System.Web.SessionState;
 
 public class GetUserID : IHttpHandler, IRequiresSessionState {
-    // connect to the buddy server
+
     public void ProcessRequest(HttpContext context)
     {
-        // get the respones back
+        // Return the user ID of the currently logged in user if no arguments are provided
+        // Or return the user ID of the given username
         context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         context.Response.ContentType = "text/plain";
         AuthenticatedUser buddyUser = context.Session["buddyUser"] as AuthenticatedUser;

@@ -9,6 +9,7 @@ public class GetUserIDList : IHttpHandler {
 
     public void ProcessRequest(HttpContext context)
     {
+        //Get all registered users, output as a JSON object of the user list
         context.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         context.Response.ContentType = "text/plain";
         if (context.Profile.IsAnonymous)
