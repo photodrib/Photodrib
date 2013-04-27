@@ -15,7 +15,7 @@ using System.Web.UI.WebControls;
 public partial class Edit : System.Web.UI.Page
 {
 
-
+    // load the page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Profile.IsAnonymous)
@@ -24,6 +24,7 @@ public partial class Edit : System.Web.UI.Page
             {
                 Expires = DateTime.Now.AddDays(30)
             });
+            // check the seeion 
             if (Session["buddyUser"] == null)
             {
                 BuddyClient client = BuddyApplication.Create();
@@ -36,7 +37,8 @@ public partial class Edit : System.Web.UI.Page
             }
         }
     }
-
+    // handle the edit button1 clicked
+    // change the contrast of one photo
     protected void EditButton_Click1(object sender, EventArgs e)
     {
         float contrast;
@@ -53,7 +55,8 @@ public partial class Edit : System.Web.UI.Page
         param = "Contrast=" + contrast.ToString() + ";";
         ApplyFilter("Color Operations", param);
     }
-
+    // handle the edit button2 clicked
+    // change the brightness of one photo
     protected void EditButton_Click2(object sender, EventArgs e)
     {
         float brightness;
@@ -70,7 +73,8 @@ public partial class Edit : System.Web.UI.Page
         param = "Brightness=" + brightness.ToString() + ";";
         ApplyFilter("Color Operations", param);
     }
-
+    // handle the edit button3 clicked
+    // change the size of one photo
     protected void EditButton_Click3(object sender, EventArgs e)
     {
         float resize;
@@ -98,7 +102,7 @@ public partial class Edit : System.Web.UI.Page
         }
         return arg;
     }
-
+    // apply the filter to the photo
     private void ApplyFilter(string filterName, string param)
     {
         int photoID;
