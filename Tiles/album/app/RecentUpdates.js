@@ -5,12 +5,13 @@
 var uid;
 
 $(document).ready(function () {
+    // an animate effect
     $('a.backbutton').hover(function () { //mouse in
         $(this).animate({ paddingLeft: '20px' }, 400);
     }, function () { //mouse out
         $(this).animate({ paddingLeft: 0 }, 400);
     });
-
+    // get user id
     $.ajax('../../../ServerStuff/GetUserID.ashx', {
         async: false,
         dataType: 'json',
@@ -18,7 +19,7 @@ $(document).ready(function () {
             uid = data;
         }
     });
-
+    // get the info of the recent uploaded photos and creat the table
     $.getJSON('../GetRecentUpdates.ashx', function (data) {
         var ctr = 0;
 
@@ -45,6 +46,8 @@ $(document).ready(function () {
             //}
         });
         htmlString += "</tr></table>";
+
+        // append the image
         $('#images').append($(htmlString));
         
         $('#images').find("img").each(function (item) {

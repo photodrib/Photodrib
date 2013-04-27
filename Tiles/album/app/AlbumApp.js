@@ -11,18 +11,18 @@ $(document).ready(function () {
     }, function () { //mouse out
         $(this).animate({ paddingLeft: 0 }, 400);
     });
-
+    // get hte user id and the album id
     albumID = parseInt($.url.param('aid'));
     uid = parseInt($.url.param('uid'));
     var url = '../GetAlbum.ashx?uid=' + uid + '&aid=' + albumID;
-
+    
     $.getJSON('../../../ServerStuff/GetUserID.ashx', function (currUid) {
         if (uid == currUid) {
             $('a.delbutton')[0].style.visibility = 'visible';
             $('a.uploadbutton')[0].style.visibility = 'visible';
         }
     });
-
+    // get the album list with user id
     $.getJSON('../GetAlbumList.ashx?id=' + uid, function (data) {
         $.each(data, function (i, item) {
             if (item.AlbumID == albumID) {
@@ -30,7 +30,7 @@ $(document).ready(function () {
             }
         });
     });
-
+    // create the albumlist table for user to chooose the albums he wants to delete
     $.getJSON(url, function (data) {
         var ctr = 0;
 
@@ -67,7 +67,7 @@ $(document).ready(function () {
         });
     });
 });
-
+// delete the album using JASON with the album id 
 function delAlbum() {
     if (!window.confirm('Are you sure to delete this album?')) return;
     $.getJSON('../DeleteAlbum.ashx?id=' + albumID, function (data) {

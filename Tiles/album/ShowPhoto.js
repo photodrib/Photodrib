@@ -8,6 +8,7 @@
 
 
 function initialize() {
+    // get the basic info of the photo
     var uid = $.url.param('uid');
     var pid = $.url.param('pid');
     var currUid;
@@ -20,11 +21,12 @@ function initialize() {
         }
     });
     if (!currUid) return;
+    // two buttons
     if (uid == currUid) {
         $('a.editbutton')[0].style.visibility = 'visible';
         $('a.delbutton')[0].style.visibility = 'visible';
     }
-
+    // show the photo with fancy box
     $.getJSON('GetPhoto.ashx?uid=' + uid + '&pid=' + pid, function (data) {
         var src = data.FullPhotoURL;
         var title = data.PhotoComment;
@@ -34,7 +36,7 @@ function initialize() {
 
         var myCenter = new google.maps.LatLng(data.Latitude, data.Longitude);
         var marker;
-
+        // animations
         var mapProp = {
             center: myCenter,
             zoom: 5,

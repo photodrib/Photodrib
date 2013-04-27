@@ -8,7 +8,9 @@ var geocoder;
 var map;
 
 function init() {
+    // get the albumid
     albumID = $.url.param('id');
+    // add event listener to the dropbox
     dropbox.addEventListener("dragover", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -38,7 +40,7 @@ function init() {
             codeAddress();
         }
     });
-
+    // connect the to google map api
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(lat, lng);
     var myOptions = {
@@ -48,8 +50,9 @@ function init() {
     }
     map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
 }
-
+// code the address of the photo
 function codeAddress() {
+    // the address is ib the google map elements and can be goten by methods
     var address = document.getElementById("address").value;
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -70,7 +73,7 @@ function codeAddress() {
         }
     });
 }
-
+// check the type of the uploaded file
 function checkFileType(filename) {
     if (filename.length <= 4) return false;
     var i = filename.lastIndexOf('.');
@@ -79,7 +82,7 @@ function checkFileType(filename) {
     if (ext == 'jpg' || ext == 'png' || ext == 'gif') return true;
     return false;
 }
-
+// show the uploading status message
 function showMessage(msg, color) {
     var p = document.createElement("p");
     p.innerText = msg;
@@ -89,7 +92,7 @@ function showMessage(msg, color) {
     }, 5000);
     message.appendChild(p);
 }
-
+// handle the draged in and teh process bar
 function handleReaderLoadEnd(e) {
     var data = e.target.result.split(',')[1];
     var xhr = new XMLHttpRequest();
